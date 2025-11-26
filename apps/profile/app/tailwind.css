@@ -1,6 +1,0 @@
-@import "@repo/ui/src/base.css";
-@source "../../../packages/ui";
-
-@theme {
-  /* Dashboard-specific theme overrides */
-}
