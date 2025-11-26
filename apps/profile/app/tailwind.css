@@ -1,0 +1,6 @@
+@import "@repo/ui/src/base.css";
+@source "../../../packages/ui";
+
+@theme {
+  /* Specific theme overrides */
+}
