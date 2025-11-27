@@ -68,7 +68,18 @@ bun run format    # Format code
 
 ---
 
-## 5. Theming Strategy
+## 5. Database Management
+
+The project uses Drizzle ORM for database management. Commands (run in `packages/db`):
+```bash
+bun run db:push       # Push schema changes directly to the database (prototyping)
+bun run db:generate   # Generate SQL migrations (production)
+bun run db:studio     # Open Drizzle Studio to view/edit data
+```
+
+---
+
+## 6. Theming Strategy
 
 - **Base Theme**: `packages/ui/src/base.css` - shared CSS variables and design tokens
 - **App Themes**: Each app's `app/tailwind.css` imports base and can override variables
@@ -76,7 +87,7 @@ bun run format    # Format code
 
 ---
 
-## 6. Code Style Guidelines
+## 7. Code Style Guidelines
 
 **General**: Concise, functional, predictable. Server-first (RSC by default, `"use client"` only at leaves).
 
@@ -97,7 +108,7 @@ bun run format    # Format code
 
 ---
 
-## 7. Creating New Apps
+## 8. Creating New Apps
 
 ```bash
 cp -r apps/template apps/[your-app-name]
