@@ -1,16 +1,15 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { getSiteUrl } from "@/utils/get-site-url";
 import { createClient } from "@/utils/supabase/server";
-
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 export async function signInWithGoogle() {
   const supabase = await createClient();
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: `${BASE_URL}/auth/callback`,
+      redirectTo: getSiteUrl("/auth/callback"),
     },
   });
 
@@ -32,7 +31,7 @@ export async function signUpWithEmail(formData: FormData) {
     email,
     password,
     options: {
-      emailRedirectTo: `${BASE_URL}/auth/callback`,
+      emailRedirectTo: getSiteUrl("/auth/callback"),
     },
   });
 
@@ -65,7 +64,7 @@ export async function forgotPassword(formData: FormData) {
   const supabase = await createClient();
 
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: `${BASE_URL}/auth/callback?next=/auth/reset-password`,
+    redirectTo: getSiteUrl("/auth/callback/reset"),
   });
 
   if (error) {
