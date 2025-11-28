@@ -45,9 +45,15 @@ export default function LoginPage() {
         </CardHeader>
 
         <CardContent className="grid gap-4">
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)} noValidate>
             <div className="grid gap-2.5">
-              <FormInput control={control} name="email" label="Email" placeholder="hello@kyt.one" />
+              <FormInput
+                control={control}
+                name="email"
+                label="Email"
+                type="email"
+                placeholder="hello@kyt.one"
+              />
 
               <div className="flex-col items-end gap-2">
                 <FormInput

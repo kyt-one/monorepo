@@ -45,13 +45,14 @@ export default function SignUpPage() {
         </CardHeader>
 
         <CardContent className="grid gap-4">
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)} noValidate>
             <div className="grid gap-2">
               <div className="grid gap-1">
                 <FormInput
                   control={control}
                   name="email"
                   label="Email"
+                  type="email"
                   placeholder="hello@kyt.one"
                 />
               </div>

@@ -43,8 +43,14 @@ export default function ForgotPasswordPage() {
         </CardHeader>
 
         <CardContent className="grid gap-4">
-          <form onSubmit={handleSubmit(onSubmit)} className="grid gap-2">
-            <FormInput control={control} name="email" label="Email" placeholder="hello@kyt.one" />
+          <form onSubmit={handleSubmit(onSubmit)} noValidate className="grid gap-2">
+            <FormInput
+              control={control}
+              name="email"
+              label="Email"
+              type="email"
+              placeholder="hello@kyt.one"
+            />
 
             <Button className="mt-2 w-full" disabled={isSubmitting}>
               {isSubmitting ? "Sending Link..." : "Send Reset Link"}
