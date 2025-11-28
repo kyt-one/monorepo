@@ -59,3 +59,38 @@ export async function signInWithEmail(formData: FormData) {
 
   return redirect("/");
 }
+
+export async function forgotPassword(formData: FormData) {
+  const email = formData.get("email") as string;
+  const supabase = await createClient();
+
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: `${BASE_URL}/auth/callback?next=/auth/reset-password`,
+  });
+
+  if (error) {
+    return redirect("/auth/forgot-password?error=" + error.message);
+  }
+
+  return redirect("/auth/forgot-password?message=Check email to reset password");
+}
+
+export async function resetPassword(formData: FormData) {
+  const password = formData.get("password") as string;
+  const confirmPassword = formData.get("confirmPassword") as string;
+  const supabase = await createClient();
+
+  if (password !== confirmPassword) {
+    return redirect("/auth/reset-password?error=Passwords do not match");
+  }
+
+  const { error } = await supabase.auth.updateUser({
+    password,
+  });
+
+  if (error) {
+    return redirect("/auth/reset-password?error=" + error.message);
+  }
+
+  return redirect("/");
+}
