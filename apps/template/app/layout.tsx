@@ -3,22 +3,22 @@ import "./tailwind.css";
 import { ThemeProvider } from "@repo/ui";
 
 export const metadata: Metadata = {
-	title: "Template",
-	description: "Template",
+  title: "Template",
+  description: "Template",
 };
 
 export default function RootLayout({
-	children,
+  children,
 }: Readonly<{
-	children: React.ReactNode;
+  children: React.ReactNode;
 }>) {
-	return (
-		<html lang="en" suppressHydrationWarning>
-			<body>
-				<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-					{children}
-				</ThemeProvider>
-			</body>
-		</html>
-	);
+  return (
+    <html lang="en" suppressHydrationWarning>
+      <body>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          {children}
+        </ThemeProvider>
+      </body>
+    </html>
+  );
 }

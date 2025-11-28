@@ -17,4 +17,3 @@ export function compactNumber(num: number): string {
   }
   return num.toString();
 }
-
