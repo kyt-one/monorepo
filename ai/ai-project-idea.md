@@ -1,4 +1,4 @@
-# Project Summary: Live Media Kit Platform (MVP Strategy)
+# Project Summary: Kyt (MVP Strategy)
 
 ## 1. Product Vision
 
