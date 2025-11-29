@@ -25,6 +25,7 @@ export default function SignUpPage() {
     defaultValues: {
       email: "",
       password: "",
+      confirmPassword: "",
     },
   });
 
@@ -47,24 +48,28 @@ export default function SignUpPage() {
         <CardContent className="grid gap-4">
           <form onSubmit={handleSubmit(onSubmit)} noValidate>
             <div className="grid gap-2">
-              <div className="grid gap-1">
-                <FormInput
-                  control={control}
-                  name="email"
-                  label="Email"
-                  type="email"
-                  placeholder="hello@kyt.one"
-                />
-              </div>
-              <div className="grid gap-1">
-                <FormInput
-                  control={control}
-                  name="password"
-                  label="Password"
-                  type="password"
-                  placeholder="********"
-                />
-              </div>
+              <FormInput
+                control={control}
+                name="email"
+                label="Email"
+                type="email"
+                placeholder="hello@kyt.one"
+              />
+              <FormInput
+                control={control}
+                name="password"
+                label="Password"
+                type="password"
+                placeholder="********"
+              />
+              <FormInput
+                control={control}
+                name="confirmPassword"
+                label="Confirm Password"
+                type="password"
+                placeholder="********"
+              />
+
               <Button className="mt-2 w-full" disabled={isSubmitting}>
                 {isSubmitting ? "Signing Up..." : "Sign Up with Email"}
               </Button>

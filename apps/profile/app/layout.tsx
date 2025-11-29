@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./tailwind.css";
-import { ThemeProvider } from "@repo/ui";
+import { BaseLayout } from "@repo/ui";
 
 export const metadata: Metadata = {
   title: "Profile - MyBio Space",
@@ -12,19 +12,5 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en" suppressHydrationWarning>
-      <body>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          disableTransitionOnChange
-          enableSystem={false}
-          forcedTheme="light"
-        >
-          {children}
-        </ThemeProvider>
-      </body>
-    </html>
-  );
+  return <BaseLayout forcedTheme="light">{children}</BaseLayout>;
 }
