@@ -8,6 +8,88 @@ export type Database = {
   };
   public: {
     Tables: {
+      analytics_snapshots: {
+        Row: {
+          created_at: string;
+          history: Json | null;
+          id: string;
+          platform_id: string;
+          stats: Json | null;
+          user_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          history?: Json | null;
+          id?: string;
+          platform_id: string;
+          stats?: Json | null;
+          user_id: string;
+        };
+        Update: {
+          created_at?: string;
+          history?: Json | null;
+          id?: string;
+          platform_id?: string;
+          stats?: Json | null;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "analytics_snapshots_user_id_profiles_id_fk";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      connected_accounts: {
+        Row: {
+          access_token: string;
+          account_id: string;
+          created_at: string;
+          expires_at: string | null;
+          id: string;
+          provider: Database["public"]["Enums"]["connected_account_provider"];
+          refresh_token: string | null;
+          scope: string | null;
+          updated_at: string;
+          user_id: string;
+        };
+        Insert: {
+          access_token: string;
+          account_id: string;
+          created_at?: string;
+          expires_at?: string | null;
+          id?: string;
+          provider: Database["public"]["Enums"]["connected_account_provider"];
+          refresh_token?: string | null;
+          scope?: string | null;
+          updated_at?: string;
+          user_id: string;
+        };
+        Update: {
+          access_token?: string;
+          account_id?: string;
+          created_at?: string;
+          expires_at?: string | null;
+          id?: string;
+          provider?: Database["public"]["Enums"]["connected_account_provider"];
+          refresh_token?: string | null;
+          scope?: string | null;
+          updated_at?: string;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "connected_accounts_user_id_profiles_id_fk";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       media_kits: {
         Row: {
           created_at: string;
@@ -131,6 +213,7 @@ export type Database = {
       };
     };
     Enums: {
+      connected_account_provider: "youtube";
       onboarding_steps: "username" | "stats";
       subscription_tier: "free" | "pro";
     };
@@ -258,6 +341,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      connected_account_provider: ["youtube"],
       onboarding_steps: ["username", "stats"],
       subscription_tier: ["free", "pro"],
     },

@@ -82,7 +82,7 @@ Stores OAuth credentials for external platforms (YouTube, Instagram, etc.).
 | :--- | :--- | :--- | :--- |
 | `id` | `uuid` | `PK`, `DEFAULT gen_random_uuid()` | Unique ID. |
 | `user_id` | `uuid` | `FK -> profiles.id`, `NOT NULL` | Link to the user. |
-| `provider` | `text` | `NOT NULL` | Platform name (e.g., 'youtube', 'instagram'). |
+| `provider` | `connected_account_provider` | `NOT NULL` | Platform name (e.g., 'youtube'). |
 | `account_id` | `text` | `NOT NULL` | External Platform ID (e.g., YT Channel ID). |
 | `access_token` | `text` | `NOT NULL` | Token for immediate API requests. |
 | `refresh_token` | `text` | | Token for background updates (Offline Access). Critical for keeping data fresh. |
@@ -106,8 +106,8 @@ Stores historical and current analytics data for connected platforms.
 | `id` | `uuid` | `PK`, `DEFAULT gen_random_uuid()` | Unique ID. |
 | `user_id` | `uuid` | `FK -> profiles.id`, `NOT NULL` | Link to the user. |
 | `platform_id` | `text` | `NOT NULL` | Links snapshot to specific channel/account. |
-| `stats` | `jsonb` | | The "Header" Data (Fast, cheap to read). Contains `subscriberCount`, `videoCount`, `viewCount`. |
-| `history` | `jsonb` | | The "Growth Graph" Data (The "Verified" Proof). Array of objects with `date`, `views`, `watchTimeMinutes`. |
+| `stats` | `jsonb` | | The "Header" Data (Fast, cheap to read). Typed as `AnalyticsStats`. |
+| `history` | `jsonb` | | The "Growth Graph" Data (The "Verified" Proof). Typed as `AnalyticsHistoryItem[]`. |
 | `created_at` | `timestamp` | `DEFAULT now()` | Creation timestamp. |
 
 **Row Level Security (RLS):**
@@ -125,3 +125,32 @@ Stores historical and current analytics data for connected platforms.
 
 - **subscription_tier**: `['free', 'pro']`
 - **onboarding_steps**: `['username', 'stats']`
+- **connected_account_provider**: `['youtube']`
+
+## JSON Types
+
+### MediaKitTheme
+```typescript
+interface MediaKitTheme {
+  primary: string;
+  radius: number;
+}
+```
+
+### AnalyticsStats
+```typescript
+interface AnalyticsStats {
+  subscriberCount: number;
+  videoCount: number;
+  viewCount: number;
+}
+```
+
+### AnalyticsHistoryItem
+```typescript
+interface AnalyticsHistoryItem {
+  date: string;
+  views: number;
+  watchTimeMinutes: number;
+}
+```

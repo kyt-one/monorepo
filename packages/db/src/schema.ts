@@ -23,9 +23,9 @@ export interface MediaKitTheme {
 }
 
 export interface AnalyticsStats {
-  subscriberCount: string;
-  videoCount: string;
-  viewCount: string;
+  subscriberCount: number;
+  videoCount: number;
+  viewCount: number;
 }
 
 export interface AnalyticsHistoryItem {
