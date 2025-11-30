@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@repo/ui";
 import { shortNumber } from "@repo/utils";
-import { Check } from "lucide-react";
+import { ShieldCheck } from "lucide-react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getPublishedMediaKit } from "@/lib/services/media-kit";
@@ -33,18 +33,13 @@ export default async function MediaKitPage({ params }: PageProps) {
   const stats = snapshot.stats;
 
   return (
-    <main className="min-h-screen bg-slate-50 dark:bg-slate-950 p-4 md:p-8">
+    <main className="min-h-screen bg-slate-50 p-10 md:p-20">
       <div className="mx-auto max-w-md space-y-6">
         <div className="text-center flex-col gap-2 items-center">
-          {profile.username && (
-            <div className="size-20 mx-auto bg-slate-200 rounded-full flex items-center justify-center text-2xl font-bold uppercase text-slate-500">
-              {profile.username.slice(0, 2)}
-            </div>
-          )}
           <h1 className="text-2xl font-bold">@{profile.username}</h1>
           <div className="flex items-center gap-1 text-xs text-green-800 bg-green-300 w-fit px-3 py-1 rounded-full">
-            Verified Media Kit
-            <Check size={12} strokeWidth={3} />
+            Verified
+            <ShieldCheck size={12} strokeWidth={2.5} />
           </div>
         </div>
 
