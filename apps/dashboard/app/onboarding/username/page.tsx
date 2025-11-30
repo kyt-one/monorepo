@@ -5,7 +5,7 @@ import { Button, FormInput } from "@repo/ui";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { OnboardingUsernameSchema, type OnboardingUsernameValues } from "@/lib/schemas/onboarding";
-import { saveUsername } from "../actions";
+import { completeUsernameStep } from "../actions";
 
 export default function OnboardingPage() {
   const [isPending, startTransition] = useTransition();
@@ -19,7 +19,7 @@ export default function OnboardingPage() {
 
   const onSubmit = (data: OnboardingUsernameValues) => {
     startTransition(async () => {
-      const result = await saveUsername(data);
+      const result = await completeUsernameStep(data);
 
       if (result) {
         if (result.fieldErrors?.username) {

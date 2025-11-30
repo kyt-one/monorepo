@@ -25,10 +25,7 @@ export default function ConnectStatsPage() {
       },
     });
 
-    if (error) {
-      console.error("OAuth Error:", error);
-      setIsLoading(false);
-    }
+    if (error) setIsLoading(false);
   };
 
   return (

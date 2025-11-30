@@ -6,6 +6,7 @@ import { createClient } from "@/lib/utils/supabase/server";
 const OnboardingFlow: OnboardingFlowStep[] = [
   { step: "username", path: "/onboarding/username" },
   { step: "stats", path: "/onboarding/stats" },
+  { step: "welcome", path: "/onboarding/welcome" },
 ];
 
 export async function authGuard() {

@@ -4,14 +4,20 @@ import { redirect } from "next/navigation";
 import { OnboardingUsernameSchema, type OnboardingUsernameValues } from "@/lib/schemas/onboarding";
 import { createClient } from "@/lib/utils/supabase/server";
 
-export type UsernameActionState = {
+export type UsernameStepActionState = {
   error?: string;
   fieldErrors?: {
     username?: string[];
   };
 };
 
-export async function saveUsername(data: OnboardingUsernameValues): Promise<UsernameActionState> {
+export type WelcomeStepActionState = {
+  error?: string;
+};
+
+export async function completeUsernameStep(
+  data: OnboardingUsernameValues
+): Promise<UsernameStepActionState> {
   const supabase = await createClient();
 
   const {
@@ -57,9 +63,25 @@ export async function saveUsername(data: OnboardingUsernameValues): Promise<User
     step_name: "username",
   });
 
-  if (rpcError) {
-    console.error("RPC Error:", rpcError);
-    return { error: "Failed to update progress." };
-  }
+  if (rpcError) return { error: "Failed to update progress." };
+
   redirect("/onboarding/stats");
+}
+
+export async function completeWelcomeStep(): Promise<WelcomeStepActionState> {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) redirect("/auth/sign-in");
+
+  const { error: rpcError } = await supabase.rpc("complete_onboarding_step", {
+    step_name: "welcome",
+  });
+
+  if (rpcError) return { error: "Failed to update progress." };
+
+  redirect("/");
 }

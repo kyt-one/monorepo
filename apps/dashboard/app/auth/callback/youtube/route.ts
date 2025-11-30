@@ -5,7 +5,7 @@ import { createClient } from "@/lib/utils/supabase/server";
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get("code");
-  const next = "/";
+  const next = "/onboarding/welcome";
 
   if (!code) {
     return NextResponse.redirect(`${origin}/onboarding/stats?error=No code provided`);
