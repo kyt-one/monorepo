@@ -9,9 +9,21 @@ const oauth2Client = new google.auth.OAuth2(
   process.env.SUPABASE_AUTH_EXTERNAL_GOOGLE_SECRET
 );
 
-const AnalyticsRowSchema = z.tuple([z.string(), z.number(), z.number()]);
 const AnalyticsResponseSchema = z.object({
-  rows: z.array(AnalyticsRowSchema).optional().default([]),
+  columnHeaders: z
+    .array(
+      z.object({
+        name: z.string(),
+        columnType: z.string().optional(),
+        dataType: z.string().optional(),
+      })
+    )
+    .optional()
+    .default([]),
+  rows: z
+    .array(z.array(z.union([z.string(), z.number()])))
+    .optional()
+    .default([]),
 });
 const ChannelStatisticsSchema = z.object({
   subscriberCount: z.coerce.number().optional().default(0),
@@ -80,11 +92,16 @@ export async function fetchAndSaveYouTubeStats(
     });
   }
 
-  const parsedAnalytics = AnalyticsResponseSchema.parse(analyticsResponse.data);
-  const history = parsedAnalytics.rows.map((row) => ({
-    date: row[0],
-    views: row[1],
-    watchTimeMinutes: row[2],
+  const data = AnalyticsResponseSchema.parse(analyticsResponse.data);
+  const headers = data.columnHeaders || [];
+  const dateIdx = headers.findIndex((h) => h.name === "day");
+  const viewsIdx = headers.findIndex((h) => h.name === "views");
+  const watchTimeIdx = headers.findIndex((h) => h.name === "estimatedMinutesWatched");
+
+  const history = data.rows.map((row) => ({
+    date: String(row[dateIdx]),
+    views: Number(row[viewsIdx]),
+    watchTimeMinutes: Number(row[watchTimeIdx]),
   }));
 
   const parsedChannelStatistics = ChannelStatisticsSchema.parse(channel.statistics);
