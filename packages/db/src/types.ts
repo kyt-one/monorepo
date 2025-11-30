@@ -11,26 +11,32 @@ export type Database = {
       analytics_snapshots: {
         Row: {
           created_at: string;
+          deleted_at: string | null;
           history: Json | null;
           id: string;
           platform_id: string;
           stats: Json | null;
+          updated_at: string;
           user_id: string;
         };
         Insert: {
           created_at?: string;
+          deleted_at?: string | null;
           history?: Json | null;
           id?: string;
           platform_id: string;
           stats?: Json | null;
+          updated_at?: string;
           user_id: string;
         };
         Update: {
           created_at?: string;
+          deleted_at?: string | null;
           history?: Json | null;
           id?: string;
           platform_id?: string;
           stats?: Json | null;
+          updated_at?: string;
           user_id?: string;
         };
         Relationships: [
@@ -48,6 +54,7 @@ export type Database = {
           access_token: string;
           account_id: string;
           created_at: string;
+          deleted_at: string | null;
           expires_at: string | null;
           id: string;
           provider: Database["public"]["Enums"]["connected_account_provider"];
@@ -60,6 +67,7 @@ export type Database = {
           access_token: string;
           account_id: string;
           created_at?: string;
+          deleted_at?: string | null;
           expires_at?: string | null;
           id?: string;
           provider: Database["public"]["Enums"]["connected_account_provider"];
@@ -72,6 +80,7 @@ export type Database = {
           access_token?: string;
           account_id?: string;
           created_at?: string;
+          deleted_at?: string | null;
           expires_at?: string | null;
           id?: string;
           provider?: Database["public"]["Enums"]["connected_account_provider"];
@@ -93,6 +102,8 @@ export type Database = {
       media_kits: {
         Row: {
           created_at: string;
+          default: boolean;
+          deleted_at: string | null;
           id: string;
           published: boolean;
           slug: string;
@@ -102,6 +113,8 @@ export type Database = {
         };
         Insert: {
           created_at?: string;
+          default?: boolean;
+          deleted_at?: string | null;
           id?: string;
           published?: boolean;
           slug: string;
@@ -111,6 +124,8 @@ export type Database = {
         };
         Update: {
           created_at?: string;
+          default?: boolean;
+          deleted_at?: string | null;
           id?: string;
           published?: boolean;
           slug?: string;
@@ -131,6 +146,7 @@ export type Database = {
       profiles: {
         Row: {
           created_at: string;
+          deleted_at: string | null;
           email: string;
           id: string;
           onboarding_steps: Database["public"]["Enums"]["onboarding_steps"][];
@@ -140,6 +156,7 @@ export type Database = {
         };
         Insert: {
           created_at?: string;
+          deleted_at?: string | null;
           email: string;
           id: string;
           onboarding_steps?: Database["public"]["Enums"]["onboarding_steps"][];
@@ -149,6 +166,7 @@ export type Database = {
         };
         Update: {
           created_at?: string;
+          deleted_at?: string | null;
           email?: string;
           id?: string;
           onboarding_steps?: Database["public"]["Enums"]["onboarding_steps"][];
@@ -163,6 +181,7 @@ export type Database = {
           created_at: string;
           current_period_end: string | null;
           customer_id: string | null;
+          deleted_at: string | null;
           id: string;
           price_id: string | null;
           provider: string;
@@ -174,6 +193,7 @@ export type Database = {
           created_at?: string;
           current_period_end?: string | null;
           customer_id?: string | null;
+          deleted_at?: string | null;
           id?: string;
           price_id?: string | null;
           provider: string;
@@ -185,6 +205,7 @@ export type Database = {
           created_at?: string;
           current_period_end?: string | null;
           customer_id?: string | null;
+          deleted_at?: string | null;
           id?: string;
           price_id?: string | null;
           provider?: string;

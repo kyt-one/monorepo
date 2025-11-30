@@ -11,6 +11,7 @@ import {
   timestamp,
   uuid,
 } from "drizzle-orm/pg-core";
+import { timestamps } from "./schema.helpers";
 
 // --- Enums ---
 export const onboardingSteps = pgEnum("onboarding_steps", ["username", "stats", "welcome"]);
@@ -52,8 +53,7 @@ export const profiles = pgTable(
     username: text("username").unique(),
     tier: subscriptionTier("tier").default("free").notNull(),
     onboardingSteps: onboardingSteps("onboarding_steps").array().default([]).notNull(),
-    createdAt: timestamp("created_at").defaultNow().notNull(),
-    updatedAt: timestamp("updated_at").defaultNow().notNull(),
+    ...timestamps,
   },
   (table) => [
     pgPolicy("Users can view own profile", {
@@ -84,8 +84,7 @@ export const subscriptions = pgTable(
     subscriptionId: text("subscription_id").unique(),
     priceId: text("price_id"),
     currentPeriodEnd: timestamp("current_period_end"),
-    createdAt: timestamp("created_at").defaultNow().notNull(),
-    updatedAt: timestamp("updated_at").defaultNow().notNull(),
+    ...timestamps,
   },
   (table) => [
     pgPolicy("Users can view own subscription", {
@@ -104,9 +103,9 @@ export const mediaKits = pgTable(
       .references(() => profiles.id, { onDelete: "cascade" }),
     slug: text("slug").notNull().unique(),
     published: boolean("published").default(false).notNull(),
+    default: boolean("default").default(false).notNull(),
     theme: jsonb("theme").$type<MediaKitTheme>(),
-    createdAt: timestamp("created_at").defaultNow().notNull(),
-    updatedAt: timestamp("updated_at").defaultNow().notNull(),
+    ...timestamps,
   },
   (table) => [
     pgPolicy("Public can view published kits", {
@@ -145,8 +144,7 @@ export const connectedAccounts = pgTable(
     refreshToken: text("refresh_token"),
     expiresAt: timestamp("expires_at"),
     scope: text("scope"),
-    createdAt: timestamp("created_at").defaultNow().notNull(),
-    updatedAt: timestamp("updated_at").defaultNow().notNull(),
+    ...timestamps,
   },
   (table) => [
     pgPolicy("Users can view own connected accounts", {
@@ -174,7 +172,7 @@ export const analyticsSnapshots = pgTable(
     platformId: text("platform_id").notNull(),
     stats: jsonb("stats").$type<AnalyticsStats>(),
     history: jsonb("history").$type<AnalyticsHistoryItem[]>(),
-    createdAt: timestamp("created_at").defaultNow().notNull(),
+    ...timestamps,
   },
   (table) => [
     pgPolicy("Users can view own snapshots", {

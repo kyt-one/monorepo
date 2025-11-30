@@ -57,6 +57,20 @@
       "when": 1764480674204,
       "tag": "0007_groovy_red_skull",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1764518837837,
+      "tag": "0008_steep_ken_ellis",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1764521976723,
+      "tag": "0009_minor_warbird",
+      "breakpoints": true
     }
   ]
 }

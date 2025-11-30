@@ -1,0 +1,1 @@
+ALTER TABLE "media_kits" ADD COLUMN "default" boolean DEFAULT false NOT NULL;
