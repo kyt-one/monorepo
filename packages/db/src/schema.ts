@@ -170,8 +170,12 @@ export const analyticsSnapshots = pgTable(
       .notNull()
       .references(() => profiles.id, { onDelete: "cascade" }),
     platformId: text("platform_id").notNull(),
-    stats: jsonb("stats").$type<AnalyticsStats>(),
-    history: jsonb("history").$type<AnalyticsHistoryItem[]>(),
+    stats: jsonb("stats").$type<AnalyticsStats>().notNull().default({
+      subscriberCount: 0,
+      videoCount: 0,
+      viewCount: 0,
+    }),
+    history: jsonb("history").$type<AnalyticsHistoryItem[]>().notNull().default([]),
     ...timestamps,
   },
   (table) => [

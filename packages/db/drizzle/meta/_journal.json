@@ -71,6 +71,20 @@
       "when": 1764521976723,
       "tag": "0009_minor_warbird",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1764529832063,
+      "tag": "0010_lush_sir_ram",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1764529922496,
+      "tag": "0011_brown_scarecrow",
+      "breakpoints": true
     }
   ]
 }

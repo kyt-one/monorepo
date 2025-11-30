@@ -1,0 +1,2 @@
+ALTER TABLE "analytics_snapshots" ALTER COLUMN "stats" SET DEFAULT '{"subscriberCount":0,"videoCount":0,"viewCount":0}'::jsonb;--> statement-breakpoint
+ALTER TABLE "analytics_snapshots" ALTER COLUMN "stats" SET NOT NULL;

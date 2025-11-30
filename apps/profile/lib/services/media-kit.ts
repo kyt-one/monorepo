@@ -15,6 +15,7 @@ export async function getPublishedMediaKit(slug: string) {
     where: eq(analyticsSnapshots.userId, kitData.profile.id),
     orderBy: [desc(analyticsSnapshots.createdAt)],
   });
+  if (!snapshot) return null;
 
   const { profile, ...kit } = kitData;
 

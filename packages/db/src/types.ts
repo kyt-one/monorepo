@@ -12,30 +12,30 @@ export type Database = {
         Row: {
           created_at: string;
           deleted_at: string | null;
-          history: Json | null;
+          history: Json;
           id: string;
           platform_id: string;
-          stats: Json | null;
+          stats: Json;
           updated_at: string;
           user_id: string;
         };
         Insert: {
           created_at?: string;
           deleted_at?: string | null;
-          history?: Json | null;
+          history?: Json;
           id?: string;
           platform_id: string;
-          stats?: Json | null;
+          stats?: Json;
           updated_at?: string;
           user_id: string;
         };
         Update: {
           created_at?: string;
           deleted_at?: string | null;
-          history?: Json | null;
+          history?: Json;
           id?: string;
           platform_id?: string;
-          stats?: Json | null;
+          stats?: Json;
           updated_at?: string;
           user_id?: string;
         };
