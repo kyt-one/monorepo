@@ -29,14 +29,9 @@ export async function GET(request: Request) {
 
   try {
     await fetchAndSaveYouTubeStats(data.session.user.id, providerToken, providerRefreshToken);
-
-    const { error: rpcError } = await supabase.rpc("complete_onboarding_step", {
+    await supabase.rpc("complete_onboarding_step", {
       step_name: "stats",
     });
-
-    if (rpcError) {
-      console.error("Failed to mark onboarding complete:", rpcError);
-    }
 
     return NextResponse.redirect(`${origin}${next}`);
   } catch (err) {
