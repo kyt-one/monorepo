@@ -2,6 +2,7 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import type { OnboardingFlowStep } from "@/lib/schemas/onboarding";
 import { createClient } from "@/lib/utils/supabase/server";
+import { getCurrentUser } from "./current-user";
 
 const OnboardingFlow: OnboardingFlowStep[] = [
   { step: "username", path: "/onboarding/username" },
@@ -11,10 +12,7 @@ const OnboardingFlow: OnboardingFlowStep[] = [
 
 export async function authGuard() {
   const supabase = await createClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getCurrentUser(supabase);
   const headersList = await headers();
   const pathname = headersList.get("x-pathname") || "/";
   const isAuthRoute = pathname.startsWith("/auth");

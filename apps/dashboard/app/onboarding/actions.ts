@@ -2,6 +2,8 @@
 
 import { redirect } from "next/navigation";
 import { OnboardingUsernameSchema, type OnboardingUsernameValues } from "@/lib/schemas/onboarding";
+import { createDefaultKit } from "@/lib/services/media-kit";
+import { getCurrentUser } from "@/lib/utils/current-user";
 import { createClient } from "@/lib/utils/supabase/server";
 
 export type UsernameStepActionState = {
@@ -19,10 +21,7 @@ export async function completeUsernameStep(
   data: OnboardingUsernameValues
 ): Promise<UsernameStepActionState> {
   const supabase = await createClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getCurrentUser(supabase);
 
   if (!user) redirect("/auth/sign-in");
 
@@ -70,12 +69,11 @@ export async function completeUsernameStep(
 
 export async function completeWelcomeStep(): Promise<WelcomeStepActionState> {
   const supabase = await createClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getCurrentUser(supabase);
 
   if (!user) redirect("/auth/sign-in");
+
+  await createDefaultKit(user.id);
 
   const { error: rpcError } = await supabase.rpc("complete_onboarding_step", {
     step_name: "welcome",
