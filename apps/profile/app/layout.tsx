@@ -3,8 +3,8 @@ import "./tailwind.css";
 import { BaseLayout } from "@repo/ui";
 
 export const metadata: Metadata = {
-  title: "Profile - MyBio Space",
-  description: "Public Media Kit",
+  title: "Kyt",
+  description: "The Future of Media Kits",
 };
 
 export default function RootLayout({
