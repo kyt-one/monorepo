@@ -22,6 +22,7 @@
     "react-dom": "catalog:default",
     "react-hook-form": "catalog:default",
     "react-if": "catalog:ui",
+    "usehooks-ts": "catalog:utils",
     "zod": "catalog:default",
     "date-fns": "catalog:default"
   },
