@@ -1,4 +1,3 @@
-import { shortId } from "@repo/utils";
 import type { InferSelectModel } from "drizzle-orm";
 import { timestamp } from "drizzle-orm/pg-core";
 import type {
@@ -31,14 +30,14 @@ export const DefaultKitTheme: MediaKitTheme = {
 };
 
 export const DefaultKitBlocks: KitBlock[] = [
-  { id: shortId(), type: "profile", data: {} },
+  { id: "1", type: "profile", data: {} },
   {
-    id: shortId(),
+    id: "2",
     type: "separator",
     data: { title: "Stats" },
   },
   {
-    id: shortId(),
+    id: "3",
     type: "stats",
     data: {
       provider: "youtube",
@@ -46,11 +45,11 @@ export const DefaultKitBlocks: KitBlock[] = [
     },
   },
   {
-    id: shortId(),
+    id: "4",
     type: "separator",
     data: { title: "Contact" },
   },
-  { id: shortId(), type: "contact", data: { buttonText: "Get in touch" } },
+  { id: "5", type: "contact", data: { buttonText: "Get in touch" } },
 ];
 
 export const DefaultAnalyticsStats: AnalyticsStats = {

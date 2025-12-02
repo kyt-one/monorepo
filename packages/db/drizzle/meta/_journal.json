@@ -113,6 +113,20 @@
       "when": 1764633005714,
       "tag": "0015_round_whirlwind",
       "breakpoints": true
+    },
+    {
+      "idx": 16,
+      "version": "7",
+      "when": 1764634726295,
+      "tag": "0016_clever_wasp",
+      "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "7",
+      "when": 1764634817077,
+      "tag": "0017_curious_ender_wiggin",
+      "breakpoints": true
     }
   ]
 }
