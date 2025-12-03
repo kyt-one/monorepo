@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { BlockRenderer } from "@/components/block-renderer";
-import { getPublishedMediaKit } from "@/lib/services/media-kit";
+import { getPublishedMediaKit } from "./actions";
 
 interface PageProps {
   params: Promise<{

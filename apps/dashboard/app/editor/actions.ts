@@ -1,10 +1,11 @@
 "use server";
 
-import { db, MediaKits } from "@repo/db";
+import { db, type KitBlock, MediaKits } from "@repo/db";
 import { HexColorSchema } from "@repo/utils";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
+import { BlockSchema } from "@/lib/schemas/editor-blocks";
 import { getCurrentUser } from "@/lib/utils/current-user";
 import { createClient } from "@/lib/utils/supabase/server";
 
@@ -14,15 +15,20 @@ const UpdateThemeSchema = z.object({
   radius: z.coerce.number().min(0).max(2),
 });
 
-export type UpdateThemeState = {
+const UpdateBlocksSchema = z.object({
+  kitId: z.string().uuid(),
+  blocks: z.array(BlockSchema),
+});
+
+export type UpdateState = {
   error?: string;
   success?: boolean;
 };
 
 export async function updateKitTheme(
-  _prevState: UpdateThemeState,
+  _prevState: UpdateState,
   formData: FormData
-): Promise<UpdateThemeState> {
+): Promise<UpdateState> {
   const supabase = await createClient();
   const user = await getCurrentUser(supabase);
 
@@ -35,7 +41,7 @@ export async function updateKitTheme(
   };
 
   const validated = UpdateThemeSchema.safeParse(rawData);
-  if (!validated.success) return { error: "Invalid theme data" };
+  if (!validated.success) return { error: validated.error.issues[0].message };
 
   const { kitId, primary, radius } = validated.data;
 
@@ -47,6 +53,35 @@ export async function updateKitTheme(
         updatedAt: new Date(),
       })
       .where(eq(MediaKits.id, kitId) && eq(MediaKits.userId, user.id));
+
+    revalidatePath("/editor");
+    return { success: true };
+  } catch (err) {
+    return { error: `Failed to save changes: ${err}` };
+  }
+}
+
+export async function updateKitBlocks(kitId: string, blocks: KitBlock[]): Promise<UpdateState> {
+  const supabase = await createClient();
+  const user = await getCurrentUser(supabase);
+
+  if (!user) return { error: "Unauthorized" };
+
+  const validated = UpdateBlocksSchema.safeParse({ kitId, blocks });
+
+  if (!validated.success) {
+    console.log("Validation Error:", validated.error);
+    return { error: "Invalid block data" };
+  }
+
+  try {
+    await db
+      .update(MediaKits)
+      .set({
+        blocks: validated.data.blocks,
+        updatedAt: new Date(),
+      })
+      .where(and(eq(MediaKits.id, kitId), eq(MediaKits.userId, user.id)));
 
     revalidatePath("/editor");
     return { success: true };
