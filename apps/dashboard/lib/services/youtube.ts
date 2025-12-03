@@ -1,4 +1,10 @@
-import { AnalyticsSnapshots, type AnalyticsStats, ConnectedAccounts, db } from "@repo/db";
+import {
+  AnalyticsSnapshots,
+  ConnectedAccounts,
+  db,
+  type YouTubeHistoryItem,
+  type YouTubeStats,
+} from "@repo/db";
 import { addSeconds, format, subDays } from "date-fns";
 import { and, eq } from "drizzle-orm";
 import { google } from "googleapis";
@@ -61,7 +67,7 @@ export async function fetchAndSaveYouTubeStats(
     ids: "channel==MINE",
     startDate: format(thirtyDaysAgo, apiDateFormat),
     endDate: format(today, apiDateFormat),
-    metrics: "views,estimatedMinutesWatched",
+    metrics: "views,estimatedMinutesWatched,subscribersGained,likes",
     dimensions: "day",
     sort: "day",
   });
@@ -97,20 +103,22 @@ export async function fetchAndSaveYouTubeStats(
   const dateIdx = headers.findIndex((h) => h.name === "day");
   const viewsIdx = headers.findIndex((h) => h.name === "views");
   const watchTimeIdx = headers.findIndex((h) => h.name === "estimatedMinutesWatched");
+  const subscribersGainedIdx = headers.findIndex((h) => h.name === "subscribersGained");
+  const likesIdx = headers.findIndex((h) => h.name === "likes");
 
-  const history = data.rows.map((row) => ({
+  const history: YouTubeHistoryItem[] = data.rows.map((row) => ({
     date: String(row[dateIdx]),
     views: Number(row[viewsIdx]),
     watchTimeMinutes: Number(row[watchTimeIdx]),
+    subscribersGained: Number(row[subscribersGainedIdx]),
+    likes: Number(row[likesIdx]),
   }));
 
   const parsedChannelStatistics = ChannelStatisticsSchema.parse(channel.statistics);
-  const stats: AnalyticsStats = {
-    subscriberCount: parsedChannelStatistics.subscriberCount,
-    videoCount: parsedChannelStatistics.videoCount,
-    viewCount: parsedChannelStatistics.viewCount,
-    followerCount: 0,
-    mediaCount: 0,
+  const stats: YouTubeStats = {
+    subscribers: parsedChannelStatistics.subscriberCount,
+    videos: parsedChannelStatistics.videoCount,
+    views: parsedChannelStatistics.viewCount,
   };
 
   await db.insert(AnalyticsSnapshots).values({

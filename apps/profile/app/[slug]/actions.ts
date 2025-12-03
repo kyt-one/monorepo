@@ -1,7 +1,6 @@
 "use server";
 
-import { AnalyticsSnapshots, db, MediaKits, Profiles } from "@repo/db";
-import type { AnalyticsProviders } from "@repo/db/src/schema.helpers";
+import { type AnalyticsProvider, AnalyticsSnapshots, db, MediaKits, Profiles } from "@repo/db";
 import { and, desc, eq } from "drizzle-orm";
 
 export async function getCreatorEmail(profileId: string) {
@@ -33,10 +32,10 @@ export async function getPublishedMediaKit(slug: string) {
     .where(eq(AnalyticsSnapshots.userId, kitData.profile.id))
     .orderBy(AnalyticsSnapshots.provider, desc(AnalyticsSnapshots.createdAt));
 
-  const analyticsProviders: AnalyticsProviders = {};
+  const analyticsProvider: AnalyticsProvider = {};
 
   for (const snap of latestSnapshots) {
-    analyticsProviders[snap.provider] = {
+    analyticsProvider[snap.provider] = {
       stats: snap.stats,
       history: snap.history,
     };
@@ -47,6 +46,6 @@ export async function getPublishedMediaKit(slug: string) {
   return {
     kit,
     profile,
-    analyticsProviders,
+    analyticsProvider,
   };
 }

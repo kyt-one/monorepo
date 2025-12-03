@@ -27,7 +27,7 @@ export type Database = {
           id?: string;
           platform_id: string;
           provider: Database["public"]["Enums"]["connected_account_provider"];
-          stats?: Json;
+          stats: Json;
           updated_at?: string;
           user_id: string;
         };

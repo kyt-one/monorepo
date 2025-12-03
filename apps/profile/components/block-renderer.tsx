@@ -1,12 +1,13 @@
 import type {
+  AnalyticsProvider,
   ChartBlockData,
   CustomBlockData,
   KitBlock,
+  Profile,
   ProfileBlockData,
   SeparatorBlockData,
   StatsBlockData,
 } from "@repo/db";
-import type { AnalyticsProviders, Profile } from "@repo/db/src/schema.helpers";
 import { Case, Default, Switch } from "react-if";
 import { ChartBlock } from "./blocks/chart-block";
 import { CustomBlock } from "./blocks/custom-block";
@@ -18,10 +19,10 @@ import { ContactButton } from "./contact-button";
 interface BlockRendererProps {
   block: KitBlock;
   profile: Profile;
-  analyticsProviders: AnalyticsProviders;
+  analyticsProvider: AnalyticsProvider;
 }
 
-export function BlockRenderer({ block, profile, analyticsProviders }: BlockRendererProps) {
+export function BlockRenderer({ block, profile, analyticsProvider }: BlockRendererProps) {
   return (
     <Switch>
       <Case condition={block.type === "profile"}>
@@ -33,11 +34,11 @@ export function BlockRenderer({ block, profile, analyticsProviders }: BlockRende
       </Case>
 
       <Case condition={block.type === "stats"}>
-        <StatsBlock data={block.data as StatsBlockData} analyticsProviders={analyticsProviders} />
+        <StatsBlock data={block.data as StatsBlockData} analyticsProvider={analyticsProvider} />
       </Case>
 
       <Case condition={block.type === "chart"}>
-        <ChartBlock data={block.data as ChartBlockData} analyticsProviders={analyticsProviders} />
+        <ChartBlock data={block.data as ChartBlockData} analyticsProvider={analyticsProvider} />
       </Case>
 
       <Case condition={block.type === "custom"}>

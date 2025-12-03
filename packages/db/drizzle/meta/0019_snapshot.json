@@ -74,12 +74,8 @@
           "name": "analytics_snapshots_user_id_profiles_id_fk",
           "tableFrom": "analytics_snapshots",
           "tableTo": "profiles",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -91,9 +87,7 @@
           "name": "Users can view own snapshots",
           "as": "PERMISSIVE",
           "for": "SELECT",
-          "to": [
-            "public"
-          ],
+          "to": ["public"],
           "using": "auth.uid() = \"analytics_snapshots\".\"user_id\""
         }
       },
@@ -181,12 +175,8 @@
           "name": "connected_accounts_user_id_profiles_id_fk",
           "tableFrom": "connected_accounts",
           "tableTo": "profiles",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -198,27 +188,21 @@
           "name": "Users can view own connected accounts",
           "as": "PERMISSIVE",
           "for": "SELECT",
-          "to": [
-            "public"
-          ],
+          "to": ["public"],
           "using": "auth.uid() = \"connected_accounts\".\"user_id\""
         },
         "Users can update own connected accounts": {
           "name": "Users can update own connected accounts",
           "as": "PERMISSIVE",
           "for": "UPDATE",
-          "to": [
-            "public"
-          ],
+          "to": ["public"],
           "using": "auth.uid() = \"connected_accounts\".\"user_id\""
         },
         "Users can insert own connected accounts": {
           "name": "Users can insert own connected accounts",
           "as": "PERMISSIVE",
           "for": "INSERT",
-          "to": [
-            "public"
-          ],
+          "to": ["public"],
           "withCheck": "auth.uid() = \"connected_accounts\".\"user_id\""
         }
       },
@@ -302,12 +286,8 @@
           "name": "media_kits_user_id_profiles_id_fk",
           "tableFrom": "media_kits",
           "tableTo": "profiles",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -317,9 +297,7 @@
         "media_kits_slug_unique": {
           "name": "media_kits_slug_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "slug"
-          ]
+          "columns": ["slug"]
         }
       },
       "policies": {
@@ -327,45 +305,35 @@
           "name": "Public can view published kits",
           "as": "PERMISSIVE",
           "for": "SELECT",
-          "to": [
-            "public"
-          ],
+          "to": ["public"],
           "using": "\"media_kits\".\"published\" = true"
         },
         "Users can view own kits": {
           "name": "Users can view own kits",
           "as": "PERMISSIVE",
           "for": "SELECT",
-          "to": [
-            "public"
-          ],
+          "to": ["public"],
           "using": "auth.uid() = \"media_kits\".\"user_id\""
         },
         "Users can create own kits": {
           "name": "Users can create own kits",
           "as": "PERMISSIVE",
           "for": "INSERT",
-          "to": [
-            "public"
-          ],
+          "to": ["public"],
           "withCheck": "auth.uid() = \"media_kits\".\"user_id\""
         },
         "Users can update own kits": {
           "name": "Users can update own kits",
           "as": "PERMISSIVE",
           "for": "UPDATE",
-          "to": [
-            "public"
-          ],
+          "to": ["public"],
           "using": "auth.uid() = \"media_kits\".\"user_id\""
         },
         "Users can delete own kits": {
           "name": "Users can delete own kits",
           "as": "PERMISSIVE",
           "for": "DELETE",
-          "to": [
-            "public"
-          ],
+          "to": ["public"],
           "using": "auth.uid() = \"media_kits\".\"user_id\""
         }
       },
@@ -439,12 +407,8 @@
           "tableFrom": "profiles",
           "tableTo": "users",
           "schemaTo": "auth",
-          "columnsFrom": [
-            "id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -454,9 +418,7 @@
         "profiles_username_unique": {
           "name": "profiles_username_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "username"
-          ]
+          "columns": ["username"]
         }
       },
       "policies": {
@@ -464,27 +426,21 @@
           "name": "Users can view own profile",
           "as": "PERMISSIVE",
           "for": "SELECT",
-          "to": [
-            "public"
-          ],
+          "to": ["public"],
           "using": "auth.uid() = \"profiles\".\"id\""
         },
         "Users can update own profile": {
           "name": "Users can update own profile",
           "as": "PERMISSIVE",
           "for": "UPDATE",
-          "to": [
-            "public"
-          ],
+          "to": ["public"],
           "using": "auth.uid() = \"profiles\".\"id\""
         },
         "Users can insert own profile": {
           "name": "Users can insert own profile",
           "as": "PERMISSIVE",
           "for": "INSERT",
-          "to": [
-            "public"
-          ],
+          "to": ["public"],
           "withCheck": "auth.uid() = \"profiles\".\"id\""
         }
       },
@@ -565,12 +521,8 @@
           "name": "subscriptions_user_id_profiles_id_fk",
           "tableFrom": "subscriptions",
           "tableTo": "profiles",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -580,23 +532,17 @@
         "subscriptions_user_id_unique": {
           "name": "subscriptions_user_id_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "user_id"
-          ]
+          "columns": ["user_id"]
         },
         "subscriptions_customer_id_unique": {
           "name": "subscriptions_customer_id_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "customer_id"
-          ]
+          "columns": ["customer_id"]
         },
         "subscriptions_subscription_id_unique": {
           "name": "subscriptions_subscription_id_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "subscription_id"
-          ]
+          "columns": ["subscription_id"]
         }
       },
       "policies": {
@@ -604,9 +550,7 @@
           "name": "Users can view own subscription",
           "as": "PERMISSIVE",
           "for": "SELECT",
-          "to": [
-            "public"
-          ],
+          "to": ["public"],
           "using": "auth.uid() = \"subscriptions\".\"user_id\""
         }
       },
@@ -618,38 +562,22 @@
     "public.metric_type": {
       "name": "metric_type",
       "schema": "public",
-      "values": [
-        "views",
-        "subscribers",
-        "watchTime",
-        "all"
-      ]
+      "values": ["views", "subscribers", "watchTime", "all"]
     },
     "public.connected_account_provider": {
       "name": "connected_account_provider",
       "schema": "public",
-      "values": [
-        "youtube",
-        "instagram",
-        "tiktok"
-      ]
+      "values": ["youtube", "instagram", "tiktok"]
     },
     "public.onboarding_steps": {
       "name": "onboarding_steps",
       "schema": "public",
-      "values": [
-        "username",
-        "stats",
-        "welcome"
-      ]
+      "values": ["username", "stats", "welcome"]
     },
     "public.subscription_tier": {
       "name": "subscription_tier",
       "schema": "public",
-      "values": [
-        "free",
-        "pro"
-      ]
+      "values": ["free", "pro"]
     }
   },
   "schemas": {},

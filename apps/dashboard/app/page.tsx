@@ -1,8 +1,7 @@
-import { AnalyticsSnapshots, db, MediaKits, Profiles } from "@repo/db";
+import { db, MediaKits, Profiles } from "@repo/db";
 import { Button, Card, CardContent, CardHeader, CardTitle } from "@repo/ui";
-import { shortNumber } from "@repo/utils";
-import { and, desc, eq } from "drizzle-orm";
-import { BarChart3, Edit, Settings } from "lucide-react";
+import { and, eq } from "drizzle-orm";
+import { Edit, Settings } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { CopyMediaKitLink } from "@/components/copy-media-kit-link";
@@ -16,23 +15,18 @@ export default async function DashboardPage() {
 
   if (!user) redirect("/auth/sign-in");
 
-  const [profile, kit, snapshot] = await Promise.all([
+  const [profile, kit] = await Promise.all([
     db.query.Profiles.findFirst({
       where: eq(Profiles.id, user.id),
     }),
     db.query.MediaKits.findFirst({
       where: and(eq(MediaKits.userId, user.id), eq(MediaKits.default, true)),
     }),
-    db.query.AnalyticsSnapshots.findFirst({
-      where: eq(AnalyticsSnapshots.userId, user.id),
-      orderBy: [desc(AnalyticsSnapshots.createdAt)],
-    }),
   ]);
 
-  if (!profile || !kit || !snapshot) redirect("/auth/sign-in");
+  if (!profile || !kit) redirect("/auth/sign-in");
 
   const kitUrl = `https://kyt.one/${kit.slug}`;
-  const stats = snapshot.stats;
 
   return (
     <main className="min-h-screen p-4 md:p-8 max-w-5xl mx-auto space-y-8">
@@ -80,24 +74,12 @@ export default async function DashboardPage() {
             </CardContent>
           </Card>
         </div>
-
-        <div className="space-y-6">
-          <h2 className="text-lg font-semibold flex items-center gap-2">
-            <BarChart3 className="size-5" /> Current Snapshot
-          </h2>
-
-          <div className="grid grid-cols-2 gap-4">
-            <StatsCard label="Subscribers" value={shortNumber(stats.subscriberCount)} />
-            <StatsCard label="Total Views" value={shortNumber(stats.viewCount)} />
-            <StatsCard label="Videos" value={shortNumber(stats.videoCount)} />
-          </div>
-        </div>
       </div>
     </main>
   );
 }
 
-function StatsCard({ label, value }: { label: string; value: string }) {
+function _StatsCard({ label, value }: { label: string; value: string }) {
   return (
     <Card>
       <CardContent className="p-6">

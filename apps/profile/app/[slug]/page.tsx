@@ -34,7 +34,7 @@ export default async function MediaKitPage({ params }: PageProps) {
   const data = await getPublishedMediaKit(slug);
   if (!data) notFound();
 
-  const { kit, profile, analyticsProviders } = data;
+  const { kit, profile, analyticsProvider } = data;
   const primary = kit.theme.primary;
   const radius = kit.theme.radius;
 
@@ -52,7 +52,7 @@ export default async function MediaKitPage({ params }: PageProps) {
             key={block.id}
             block={block}
             profile={profile}
-            analyticsProviders={analyticsProviders}
+            analyticsProvider={analyticsProvider}
           />
         ))}
       </div>

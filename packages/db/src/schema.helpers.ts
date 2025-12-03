@@ -1,20 +1,5 @@
-import type { InferSelectModel } from "drizzle-orm";
 import { timestamp } from "drizzle-orm/pg-core";
-import type {
-  AnalyticsHistoryItem,
-  AnalyticsStats,
-  KitBlock,
-  MediaKitTheme,
-  Profiles,
-} from "./schema";
-
-// -- Types --
-export type AnalyticsProviders = Record<
-  string,
-  { stats: AnalyticsStats; history: AnalyticsHistoryItem[] }
->;
-
-export type Profile = InferSelectModel<typeof Profiles>;
+import type { KitBlock, MediaKitTheme } from "./schema/media-kits.sql";
 
 // -- Common Columns --
 export const timestamps = {
@@ -52,12 +37,4 @@ export const GetDefaultKitBlocks = (username: string): KitBlock[] => {
 export const DefaultKitTheme: MediaKitTheme = {
   primary: "#171717",
   radius: 0.5,
-};
-
-export const DefaultAnalyticsStats: AnalyticsStats = {
-  subscriberCount: 0,
-  videoCount: 0,
-  viewCount: 0,
-  followerCount: 0,
-  mediaCount: 0,
 };

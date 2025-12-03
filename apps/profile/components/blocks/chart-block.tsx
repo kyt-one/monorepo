@@ -1,17 +1,16 @@
 "use client";
 
-import type { ChartBlockData } from "@repo/db";
-import type { AnalyticsProviders } from "@repo/db/src/schema.helpers";
+import type { AnalyticsProvider, ChartBlockData } from "@repo/db";
 import { Card, CardContent, CardHeader, CardTitle } from "@repo/ui";
 import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis } from "recharts";
 
 interface Props {
   data: ChartBlockData;
-  analyticsProviders: AnalyticsProviders;
+  analyticsProvider: AnalyticsProvider;
 }
 
-export function ChartBlock({ data, analyticsProviders }: Props) {
-  const history = analyticsProviders[data.provider]?.history || [];
+export function ChartBlock({ data, analyticsProvider }: Props) {
+  const history = analyticsProvider[data.provider]?.history || [];
   const days = data.days;
 
   if (history.length === 0) return null;
