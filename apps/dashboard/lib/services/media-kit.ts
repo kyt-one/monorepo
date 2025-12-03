@@ -1,4 +1,5 @@
 import { db, MediaKits, Profiles } from "@repo/db";
+import { GetDefaultKitBlocks } from "@repo/db/src/schema.helpers";
 import { and, eq } from "drizzle-orm";
 
 export async function createDefaultKit(userId: string) {
@@ -23,6 +24,7 @@ export async function createDefaultKit(userId: string) {
       slug: profile.username,
       published: true,
       default: true,
+      blocks: GetDefaultKitBlocks(profile.username),
     })
     .returning();
 

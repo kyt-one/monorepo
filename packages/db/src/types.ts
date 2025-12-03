@@ -116,7 +116,7 @@ export type Database = {
           user_id: string;
         };
         Insert: {
-          blocks?: Json;
+          blocks: Json;
           created_at?: string;
           default?: boolean;
           deleted_at?: string | null;

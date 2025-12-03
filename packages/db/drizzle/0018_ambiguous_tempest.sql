@@ -1,0 +1,1 @@
+ALTER TABLE "media_kits" ALTER COLUMN "blocks" DROP DEFAULT;

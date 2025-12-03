@@ -9,6 +9,9 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@dnd-kit/core": "catalog:ui",
+    "@dnd-kit/sortable": "catalog:ui",
+    "@dnd-kit/utilities": "catalog:ui",
     "@hookform/resolvers": "catalog:default",
     "@repo/db": "workspace:*",
     "@repo/ui": "workspace:*",
