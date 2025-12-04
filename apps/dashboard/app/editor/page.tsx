@@ -30,7 +30,7 @@ export default async function EditorPage() {
           <BlocksEditor kitId={kit.id} initialBlocks={kit.blocks} />
         </div>
 
-        <div className="lg:col-span- space-y-6">
+        <div className="lg:col-span-3 space-y-6">
           <EditorForm
             kitId={kit.id}
             initialPrimary={kit.theme.primary}
