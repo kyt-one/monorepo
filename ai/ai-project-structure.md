@@ -38,8 +38,19 @@ The project uses a standard Turborepo layout with Bun workspaces:
     │   ├── src/lib/utils.ts     (cn utility)
     │   └── src/base.css          (Base theme - imported by apps)
     ├── db/                  # Database Schema & Client
-    │   ├── src/schema.ts         (Drizzle schema)
-    │   └── src/client.ts         (Supabase connection)
+    │   ├── src/schema/          # Drizzle schema definitions
+    │   │   ├── index.ts         # Exports all schema
+    │   │   ├── account.sql.ts
+    │   │   ├── analytics.sql.ts
+    │   │   ├── enums.sql.ts
+    │   │   ├── media-kits.sql.ts
+    │   │   ├── relations.sql.ts
+    │   │   ├── schema.constants.ts
+    │   │   ├── schema.helpers.ts
+    │   │   ├── subscriptions.sql.ts
+    │   │   └── views.sql.ts
+    │   ├── src/client.ts         (Supabase connection)
+    │   └── src/index.ts          (Entry point)
     ├── utils/               # Shared Helpers
     │   └── Currency formatting, Number compaction, etc.
     └── config/              # Shared TSConfig, Biome config

@@ -155,7 +155,7 @@ A view that filters `connected_accounts` to find those needing a stats refresh. 
 
 - **subscription_tier**: `['free', 'pro']`
 - **onboarding_steps**: `['username', 'stats', 'welcome']`
-- **connected_account_provider**: `['youtube']`
+- **connected_account_provider**: `['youtube', 'instagram']`
 
 ## JSON Types
 
@@ -167,21 +167,38 @@ interface MediaKitTheme {
 }
 ```
 
-### AnalyticsStats
+### PlatformStats (Union Type)
 ```typescript
-interface AnalyticsStats {
-  subscriberCount: number;
-  videoCount: number;
-  viewCount: number;
+type PlatformStats = YouTubeStats | InstagramStats;
+
+interface YouTubeStats {
+  subscribers: number;
+  views: number;
+  videos: number;
+}
+
+interface InstagramStats {
+  followers: number;
+  likes: number;
 }
 ```
 
-### AnalyticsHistoryItem
+### PlatformHistoryItem (Union Type)
 ```typescript
-interface AnalyticsHistoryItem {
+type PlatformHistoryItem = YouTubeHistoryItem | InstagramHistoryItem;
+
+interface YouTubeHistoryItem {
   date: string;
   views: number;
   watchTimeMinutes: number;
+  subscribersGained: number;
+  likes: number;
+}
+
+interface InstagramHistoryItem {
+  date: string;
+  followers: number;
+  likes: number;
 }
 ```
 
