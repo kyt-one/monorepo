@@ -3,6 +3,7 @@ import {
   InstagramChartMetrics,
   type InstagramStatMetric,
   InstagramStatMetrics,
+  ProviderList,
   type StatsOrChartBlockType,
   type YouTubeChartMetric,
   YouTubeChartMetrics,
@@ -26,6 +27,17 @@ const MetricLabels: Record<AllMetrics, string> = {
   likes: "Likes",
   followers: "Followers",
 };
+
+const ProviderLabels: Record<(typeof ProviderList)[number], string> = {
+  youtube: "YouTube",
+  instagram: "Instagram (Coming Soon)",
+};
+
+export const ProviderOptions = ProviderList.map((p) => ({
+  label: ProviderLabels[p],
+  value: p,
+  disabled: p === "instagram",
+}));
 
 function getOptions(metrics: readonly AllMetrics[]) {
   return metrics.map((m) => ({
