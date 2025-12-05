@@ -34,8 +34,8 @@ export const DefaultKitTheme: MediaKitTheme = {
 
 export const CheckoutTiersConfig = {
   pro: {
-    month: { variantId: "1130040", price: 6.99 },
-    year: { variantId: "1130402", price: 69.99 },
+    month: { productId: "144a3a5c-8f37-41cd-9738-ee63d568f3bb", variantId: "1130040", price: 6.99 },
+    year: { productId: "39a9bc8d-460d-48ad-bfe4-8a52d09c5d6e", variantId: "1130402", price: 69.99 },
   },
 } as const;
 

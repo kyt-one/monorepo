@@ -10,18 +10,27 @@ import { When } from "react-if";
 interface Props {
   tier: SubscriptionTier;
   interval: SubscriptionInterval;
+  productId: string;
   variantId: string;
   userId: string;
   buttonText: string;
   className?: string;
 }
 
-export function UpgradeButton({ interval, tier, variantId, userId, buttonText, className }: Props) {
+export function UpgradeButton({
+  interval,
+  tier,
+  productId,
+  variantId,
+  userId,
+  buttonText,
+  className,
+}: Props) {
   const [loading, setLoading] = useState(false);
 
   const handleCheckout = () => {
     setLoading(true);
-    const url = getCheckoutUrl({ variantId, userId, interval, tier });
+    const url = getCheckoutUrl({ productId, variantId, userId, interval, tier });
     window.location.href = url;
   };
 
