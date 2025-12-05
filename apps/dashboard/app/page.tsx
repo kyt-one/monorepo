@@ -1,14 +1,13 @@
-import { db, MediaKits, Profiles } from "@repo/db";
+import { CheckoutTiersConfig, db, MediaKits, Profiles } from "@repo/db";
 import { Button, Card, CardContent, CardHeader, CardTitle } from "@repo/ui";
-import { and, eq } from "drizzle-orm";
-import { Edit, Settings } from "lucide-react";
+import { getKitUrl } from "@repo/utils";
+import { desc, eq } from "drizzle-orm";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { CopyMediaKitLink } from "@/components/copy-media-kit-link";
 import { UpgradeButton } from "@/components/upgrade-button";
 import { getCurrentUser } from "@/lib/utils/current-user";
 import { createClient } from "@/lib/utils/supabase/server";
-import { signOut } from "./auth/actions";
 
 export default async function DashboardPage() {
   const supabase = await createClient();
@@ -16,89 +15,73 @@ export default async function DashboardPage() {
 
   if (!user) redirect("/auth/sign-in");
 
-  const [profile, kit] = await Promise.all([
-    db.query.Profiles.findFirst({
-      where: eq(Profiles.id, user.id),
-    }),
-    db.query.MediaKits.findFirst({
-      where: and(eq(MediaKits.userId, user.id), eq(MediaKits.default, true)),
-    }),
-  ]);
+  const profile = await db.query.Profiles.findFirst({
+    where: eq(Profiles.id, user.id),
+  });
 
-  if (!profile || !kit) redirect("/auth/sign-in");
+  const kits = await db.query.MediaKits.findMany({
+    where: eq(MediaKits.userId, user.id),
+    orderBy: desc(MediaKits.createdAt),
+  });
 
-  const kitUrl = `https://kyt.one/${kit.slug}`;
+  if (!profile || kits.length === 0) redirect("/auth/sign-in");
+
+  const isPro = profile.tier === "pro";
 
   return (
     <main className="min-h-screen p-4 md:p-8 max-w-5xl mx-auto space-y-8">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
-          <p className="text-muted-foreground">Manage your media kit and analytics.</p>
+          <p className="text-muted-foreground">
+            Manage your {kits.length} media kit{kits.length !== 1 ? "s" : ""}.
+          </p>
         </div>
-        <div className="flex gap-2">
-          <form action={signOut}>
-            <Button variant="outline">Sign Out</Button>
-          </form>
-        </div>
-      </div>
-
-      <div className="flex gap-4">
-        <UpgradeButton
-          userId={user.id}
-          variantId="12345" // Monthly ID
-          buttonText="Get Pro ($7/mo)"
-        />
-        <UpgradeButton
-          userId={user.id}
-          variantId="67890" // Annual ID
-          buttonText="Get Annual ($70/yr)"
-          className="bg-green-600 hover:bg-green-700"
-        />
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Card>
-          <CardHeader>
-            <CardTitle>Distribution</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <CopyMediaKitLink url={kitUrl} />
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Customization</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <p className="text-sm text-muted-foreground">
-              Update your kit's appearance and primary color.
-            </p>
+        <div className="flex gap-2 items-center">
+          {!isPro && (
             <div className="flex gap-2">
-              <Button className="w-full" asChild>
-                <Link href="/editor">
-                  <Edit className="mr-2 size-4" /> Open Editor
-                </Link>
-              </Button>
-              <Button variant="outline" size="icon" disabled>
-                <Settings className="size-4" />
-              </Button>
+              <UpgradeButton
+                interval="month"
+                tier="pro"
+                variantId={CheckoutTiersConfig.pro.month.variantId}
+                userId={user.id}
+                buttonText={`Monthly ${CheckoutTiersConfig.pro.month.price}`}
+                className="bg-zinc-800 hover:bg-zinc-700 text-white"
+              />
+              <UpgradeButton
+                interval="year"
+                tier="pro"
+                variantId={CheckoutTiersConfig.pro.year.variantId}
+                userId={user.id}
+                buttonText={`Yearly ${CheckoutTiersConfig.pro.year.price}`}
+                className="bg-amber-600 hover:bg-amber-700 text-white"
+              />
             </div>
-          </CardContent>
-        </Card>
+          )}
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 gap-4">
+        {kits.map((kit) => (
+          <Card key={kit.id} className={kit.default ? "border-primary/20 bg-muted/10" : ""}>
+            <CardHeader className="pb-3">
+              <CardTitle className="text-lg flex justify-between items-center">
+                {kit.default && (
+                  <span className="text-xs font-normal px-2 py-1 bg-primary/10 rounded-full">
+                    Default
+                  </span>
+                )}
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <CopyMediaKitLink url={getKitUrl(kit.slug)} />
+              <Button variant="outline" className="w-full" asChild>
+                <Link href={`/editor?kitId=${kit.id}`}>Edit Kit</Link>
+              </Button>
+            </CardContent>
+          </Card>
+        ))}
       </div>
     </main>
-  );
-}
-
-function _StatsCard({ label, value }: { label: string; value: string }) {
-  return (
-    <Card>
-      <CardContent className="p-6">
-        <p className="text-sm font-medium text-muted-foreground">{label}</p>
-        <p className="text-2xl font-bold mt-2">{value}</p>
-      </CardContent>
-    </Card>
   );
 }

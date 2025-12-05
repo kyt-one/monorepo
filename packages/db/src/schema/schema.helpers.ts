@@ -1,13 +1,6 @@
 import { timestamp } from "drizzle-orm/pg-core";
 import type { KitBlock, MediaKitTheme } from "./media-kits.sql";
 
-// -- Common Columns --
-export const timestamps = {
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().notNull(),
-  deletedAt: timestamp("deleted_at"),
-};
-
 // -- Default Values --
 export const GetDefaultKitBlocks = (username: string): KitBlock[] => {
   return [
@@ -38,3 +31,20 @@ export const DefaultKitTheme: MediaKitTheme = {
   primary: "#171717",
   radius: 0.5,
 };
+
+export const CheckoutTiersConfig = {
+  pro: {
+    month: { variantId: "1130040", price: 6.99 },
+    year: { variantId: "1130402", price: 69.99 },
+  },
+} as const;
+
+// -- Common Columns --
+export const timestamps = {
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  deletedAt: timestamp("deleted_at"),
+};
+
+// Types
+export type CheckoutTierConfig = typeof CheckoutTiersConfig;

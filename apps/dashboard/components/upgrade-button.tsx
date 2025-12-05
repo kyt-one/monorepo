@@ -1,31 +1,28 @@
 "use client";
 
+import type { SubscriptionInterval, SubscriptionTier } from "@repo/db";
 import { Button } from "@repo/ui";
+import { getCheckoutUrl } from "@repo/utils";
 import { Loader2, Zap } from "lucide-react";
 import { useState } from "react";
 import { When } from "react-if";
 
-interface UpgradeButtonProps {
+interface Props {
+  tier: SubscriptionTier;
+  interval: SubscriptionInterval;
+  variantId: string;
   userId: string;
-  variantId: string; // The Product ID from Lemon Squeezy Dashboard
-  buttonText?: string;
+  buttonText: string;
   className?: string;
 }
 
-export function UpgradeButton({
-  userId,
-  variantId,
-  buttonText = "Upgrade to Pro",
-  className,
-}: UpgradeButtonProps) {
+export function UpgradeButton({ interval, tier, variantId, userId, buttonText, className }: Props) {
   const [loading, setLoading] = useState(false);
 
   const handleCheckout = () => {
     setLoading(true);
-    // Construct the checkout URL with the user_id in custom data
-    // Format: https://your-store.lemonsqueezy.com/checkout/buy/:variant_id?checkout[custom][user_id]=:user_id
-    const checkoutUrl = `https://your-store.lemonsqueezy.com/checkout/buy/${variantId}?checkout[custom][user_id]=${userId}`;
-    window.location.href = checkoutUrl;
+    const url = getCheckoutUrl({ variantId, userId, interval, tier });
+    window.location.href = url;
   };
 
   return (

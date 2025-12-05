@@ -44,11 +44,9 @@ export type PlatformStats = YouTubeStats | InstagramStats;
 export type PlatformHistoryItem = YouTubeHistoryItem | InstagramHistoryItem;
 
 export type YouTubeStatMetric = (typeof YouTubeStatMetricsList)[number];
-
-export type InstagramStatMetric = (typeof InstagramStatMetricsList)[number];
-
 export type YouTubeChartMetric = (typeof YouTubeChartMetricsList)[number];
 
+export type InstagramStatMetric = (typeof InstagramStatMetricsList)[number];
 export type InstagramChartMetric = (typeof InstagramChartMetricsList)[number];
 
 export const AnalyticsSnapshots = pgTable(
