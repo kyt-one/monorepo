@@ -42,7 +42,6 @@ export async function POST(request: Request) {
         await handleSubscriptionChange(payload);
         break;
 
-      case "subscription_cancelled":
       case "subscription_expired":
         await handleSubscriptionEnd(payload);
         break;
