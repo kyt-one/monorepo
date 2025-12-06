@@ -34,7 +34,6 @@ export async function POST(request: Request) {
 
   try {
     console.log("Processing webhook event:", eventName);
-    console.log("Webhook payload:", payload);
 
     switch (eventName) {
       case "subscription_created":
