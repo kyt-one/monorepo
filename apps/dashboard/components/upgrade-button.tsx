@@ -4,7 +4,7 @@ import type { SubscriptionInterval, SubscriptionTier } from "@repo/db";
 import { Button } from "@repo/ui";
 import { getCheckoutUrl } from "@repo/utils";
 import { Loader2, Zap } from "lucide-react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { When } from "react-if";
 
