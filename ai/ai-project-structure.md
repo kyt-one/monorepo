@@ -21,6 +21,7 @@
 ## 2. Monorepo Architecture
 
 The project uses a standard Turborepo layout with Bun workspaces:
+
 ```
 .
 ├── package.json             # Root workspace configuration
@@ -29,7 +30,7 @@ The project uses a standard Turborepo layout with Bun workspaces:
 ├── turbo.json
 ├── apps/
 │   ├── dashboard/           # Next.js 15 (Creator Admin Portal)
-│   │   ├── Features: Supabase Auth (SSR), OAuth Connect, Stripe Billing, Theme Editor
+│   │   ├── Features: Supabase Auth (SSR), OAuth Connect, Lemon Squeezy Billing, Theme Editor
 │   │   └── Uses "use client" heavily for the editor interface
 │   └── template/           # Next.js App Template - copy to create new apps
 └── packages/
@@ -56,8 +57,6 @@ The project uses a standard Turborepo layout with Bun workspaces:
     └── config/              # Shared TSConfig, Biome config
 ```
 
-```
-
 ---
 
 ## 3. Domain & Routing Strategy
@@ -82,7 +81,7 @@ This allows us to have a unified domain experience while keeping the Marketing a
 
 ---
 
-## 3. Dependency Management
+## 4. Dependency Management
 
 Uses Bun workspaces and **Bun Catalogs** for version consistency.
 
@@ -109,7 +108,7 @@ bun run dev                    # Run all apps
 
 ---
 
-## 4. Biome Configuration
+## 5. Biome Configuration
 
 Single tool for linting and formatting. Commands:
 ```bash
@@ -119,7 +118,7 @@ bun run format    # Format code
 
 ---
 
-## 5. Database Management
+## 6. Database Management
 
 The project uses Drizzle ORM for database management. Commands (run in `packages/db`):
 ```bash
@@ -130,7 +129,7 @@ bun run db:studio     # Open Drizzle Studio to view/edit data
 
 ---
 
-## 6. Theming Strategy
+## 7. Theming Strategy
 
 - **Base Theme**: `packages/ui/src/base.css` - shared CSS variables and design tokens
 - **App Themes**: Each app's `app/tailwind.css` imports base and can override variables
@@ -138,7 +137,7 @@ bun run db:studio     # Open Drizzle Studio to view/edit data
 
 ---
 
-## 7. Code Style Guidelines
+## 8. Code Style Guidelines
 
 **General**: Concise, functional, predictable. Server-first (RSC by default, `"use client"` only at leaves).
 
@@ -159,7 +158,7 @@ bun run db:studio     # Open Drizzle Studio to view/edit data
 
 ---
 
-## 8. Creating New Apps
+## 9. Creating New Apps
 
 ```bash
 cp -r apps/template apps/[your-app-name]
