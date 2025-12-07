@@ -18,7 +18,7 @@
     "@repo/utils": "workspace:*",
     "@supabase/ssr": "catalog:db",
     "@supabase/supabase-js": "catalog:db",
-    "googleapis": "^166.0.0",
+    "googleapis": "catalog:default",
     "lucide-react": "catalog:ui",
     "next": "catalog:default",
     "react": "catalog:default",

@@ -13,6 +13,7 @@
     "@repo/db": "workspace:*",
     "@repo/utils": "workspace:*",
     "date-fns": "catalog:default",
+    "googleapis": "catalog:default",
     "lucide-react": "catalog:ui",
     "next": "catalog:default",
     "react": "catalog:default",
