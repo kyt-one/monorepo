@@ -36,16 +36,17 @@ Stores application-specific user data. This table extends Supabase's `auth.users
 
 ### 2. Subscriptions (`public.subscriptions`)
 
-Stores subscription details, allowing for multiple providers (Stripe, Lemon Squeezy, etc.).
+Stores subscription details, linked to Lemon Squeezy (or other providers).
 
 | Column | Type | Constraints | Description |
 | :--- | :--- | :--- | :--- |
 | `id` | `uuid` | `PK`, `DEFAULT gen_random_uuid()` | Unique ID. |
 | `user_id` | `uuid` | `FK -> profiles.id`, `UNIQUE` | Link to the user. |
-| `provider` | `text` | `NOT NULL` | Payment provider (e.g., 'stripe'). |
+| `provider` | `text` | `NOT NULL` | Payment provider (e.g., 'lemon-squeezy'). |
 | `customer_id` | `text` | `UNIQUE` | Provider's Customer ID. |
 | `subscription_id` | `text` | `UNIQUE` | Provider's Subscription ID. |
-| `price_id` | `text` | | Provider's Price/Plan ID. |
+| `price_id` | `text` | | Provider's Price/Variant ID. |
+| `interval` | `subscription_interval` | | Billing frequency ('month' or 'year'). Used for API limits. |
 | `current_period_end` | `timestamp` | | Subscription expiration date. |
 | `created_at` | `timestamp` | `DEFAULT now()` | Creation timestamp. |
 | `updated_at` | `timestamp` | `DEFAULT now()` | Last update timestamp. |
@@ -90,9 +91,9 @@ Stores OAuth credentials for external platforms (YouTube, Instagram, etc.).
 | `provider` | `connected_account_provider` | `NOT NULL` | Platform name (e.g., 'youtube'). |
 | `account_id` | `text` | `NOT NULL` | External Platform ID (e.g., YT Channel ID). |
 | `access_token` | `text` | `NOT NULL` | Token for immediate API requests. |
-| `refresh_token` | `text` | | Token for background updates (Offline Access). Critical for keeping data fresh. |
-| `expires_at` | `timestamp` | | Expiration time for the access token. Used to determine when to refresh. |
-| `scope` | `text` | | Scopes granted by the user (e.g., to verify 'analytics.readonly'). |
+| `refresh_token` | `text` | | Token for background updates (Offline Access). |
+| `expires_at` | `timestamp` | | Expiration time for the access token. |
+| `scope` | `text` | | Scopes granted by the user. |
 | `created_at` | `timestamp` | `DEFAULT now()` | Creation timestamp. |
 | `updated_at` | `timestamp` | `DEFAULT now()` | Last update timestamp. |
 | `deleted_at` | `timestamp` | | Soft delete timestamp. |
@@ -100,7 +101,7 @@ Stores OAuth credentials for external platforms (YouTube, Instagram, etc.).
 **Row Level Security (RLS):**
 - **Select**: Users can view their own connected accounts.
 - **Insert**: Users can connect new accounts.
-- **Update**: Users can update their own connected accounts (e.g., refreshing tokens).
+- **Update**: Users can update their own connected accounts.
 
 ### 5. Analytics Snapshots (`public.analytics_snapshots`)
 
@@ -111,8 +112,8 @@ Stores historical and current analytics data for connected platforms.
 | `id` | `uuid` | `PK`, `DEFAULT gen_random_uuid()` | Unique ID. |
 | `user_id` | `uuid` | `FK -> profiles.id`, `NOT NULL` | Link to the user. |
 | `platform_id` | `text` | `NOT NULL` | Links snapshot to specific channel/account. |
-| `stats` | `jsonb` | `DEFAULT DefaultAnalyticsStats`, `NOT NULL` | The "Header" Data (Fast, cheap to read). Typed as `AnalyticsStats`. |
-| `history` | `jsonb` | `DEFAULT []`, `NOT NULL` | The "Growth Graph" Data (The "Verified" Proof). Typed as `AnalyticsHistoryItem[]`. |
+| `stats` | `jsonb` | `DEFAULT DefaultAnalyticsStats`, `NOT NULL` | The "Header" Data. Typed as `AnalyticsStats`. |
+| `history` | `jsonb` | `DEFAULT []`, `NOT NULL` | The "Growth Graph" Data. Typed as `AnalyticsHistoryItem[]`. |
 | `created_at` | `timestamp` | `DEFAULT now()` | Creation timestamp. |
 | `updated_at` | `timestamp` | `DEFAULT now()` | Last update timestamp. |
 | `deleted_at` | `timestamp` | | Soft delete timestamp. |
@@ -129,7 +130,8 @@ Stores historical and current analytics data for connected platforms.
 A view that filters `connected_accounts` to find those needing a stats refresh. It handles the logic for different update frequencies based on user tiers.
 
 **Logic:**
-- **Pro Users**: Update if data is older than **1 hour**.
+- **Annual Pro**: Update if data is older than **15 minutes**.
+- **Monthly Pro**: Update if data is older than **1 hour**.
 - **Free Users**: Update if data is older than **24 hours**.
 - **New Accounts**: Update if `updated_at` is NULL.
 
@@ -154,8 +156,9 @@ A view that filters `connected_accounts` to find those needing a stats refresh. 
 ## Enums
 
 - **subscription_tier**: `['free', 'pro']`
+- **subscription_interval**: `['month', 'year']`
 - **onboarding_steps**: `['username', 'stats', 'welcome']`
-- **connected_account_provider**: `['youtube', 'instagram']`
+- **connected_account_provider**: `['youtube', 'instagram', 'tiktok']`
 
 ## JSON Types
 
@@ -165,7 +168,6 @@ interface MediaKitTheme {
   primary: string;
   radius: number;
 }
-```
 
 ### PlatformStats (Union Type)
 ```typescript
@@ -212,4 +214,3 @@ type KitBlock =
   | { id: string; type: "custom"; data: CustomBlockData }
   | { id: string; type: "contact"; data: ContactBlockData };
 ```
-
