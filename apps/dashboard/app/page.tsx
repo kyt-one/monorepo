@@ -6,6 +6,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { When } from "react-if";
 import { CopyMediaKitLink } from "@/components/copy-media-kit-link";
+import { CreateKitButton } from "@/components/create-kit-button"; // [!code ++]
 import { ManageSubscriptionButton } from "@/components/manage-subscription-button";
 import { UpgradeButton } from "@/components/upgrade-button";
 import { getCurrentUser } from "@/lib/utils/current-user";
@@ -40,9 +41,6 @@ export default async function DashboardPage() {
           </p>
         </div>
         <div className="flex gap-2 items-center">
-          <When condition={isPro}>
-            <ManageSubscriptionButton />
-          </When>
           <When condition={!isPro}>
             <div className="flex gap-2">
               <UpgradeButton
@@ -63,14 +61,19 @@ export default async function DashboardPage() {
               />
             </div>
           </When>
+          <When condition={isPro}>
+            <ManageSubscriptionButton />
+          </When>
+          <CreateKitButton isPro={isPro} />
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {kits.map((kit) => (
           <Card key={kit.id} className={kit.default ? "border-primary/20 bg-muted/10" : ""}>
             <CardHeader className="pb-3">
               <CardTitle className="text-lg flex justify-between items-center">
+                <span>{kit.default ? "Primary Kit" : `/${kit.slug}`}</span>
                 {kit.default && (
                   <span className="text-xs font-normal px-2 py-1 bg-primary/10 rounded-full">
                     Default
@@ -79,7 +82,9 @@ export default async function DashboardPage() {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <CopyMediaKitLink url={getKitUrl(kit.slug)} />
+              <CopyMediaKitLink
+                url={getKitUrl(profile.username + (kit.default ? "" : `/${kit.slug}`))}
+              />
               <Button variant="outline" className="w-full" asChild>
                 <Link href={`/editor?kitId=${kit.id}`}>Edit Kit</Link>
               </Button>
