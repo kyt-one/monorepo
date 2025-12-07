@@ -45,7 +45,7 @@ export async function GET(request: Request) {
           const isExpired = !account.expiresAt || isBefore(account.expiresAt, addMinutes(now, 5));
 
           let accessToken = account.accessToken;
-          let refreshToken = account.refreshToken || undefined;
+          let refreshToken = account.refreshToken;
 
           if (isExpired && account.refreshToken) {
             const { credentials } = await oauth2Client.refreshAccessToken();

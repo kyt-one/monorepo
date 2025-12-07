@@ -20,7 +20,7 @@ export async function GET(request: Request) {
   }
 
   const providerToken = data.session.provider_token;
-  const providerRefreshToken = data.session.provider_refresh_token || undefined;
+  const providerRefreshToken = data.session.provider_refresh_token;
 
   if (!providerToken) {
     console.error("No provider token found in session");
