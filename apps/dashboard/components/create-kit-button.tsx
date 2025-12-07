@@ -46,7 +46,7 @@ export function CreateKitButton({ isPro }: { isPro: boolean }) {
       </Button>
 
       <Sheet open={open} onOpenChange={setOpen}>
-        <SheetContent>
+        <SheetContent onOpenAutoFocus={(e) => e.preventDefault()}>
           <SheetHeader>
             <SheetTitle>Create New Kit</SheetTitle>
             <SheetDescription>
@@ -76,7 +76,7 @@ export function CreateKitButton({ isPro }: { isPro: boolean }) {
             </When>
           </div>
           <SheetFooter>
-            <Button onClick={handleCreate} disabled={isPending || !slug}>
+            <Button onClick={handleCreate} disabled={isPending || !slug || !isPro}>
               <When condition={isPending}>
                 <Loader2 className="mr-2 size-4 animate-spin" />
               </When>
