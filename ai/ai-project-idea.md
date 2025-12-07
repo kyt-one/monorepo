@@ -45,32 +45,34 @@ We are building a **"Live Media Kit Platform"**—a specialized portfolio tool f
 To allow tailored pitching without duplicating API costs:
 - **Relationship**: `User` (1) ↔ `Kits` (Many).
 - **Quota Protection**: The **Snapshot Engine** (YouTube API fetcher) is linked to the `User`, not the `Kit`.
-    - *Result*: A Pro user can have 10 different kits displaying the same YouTube stats, but we only burn **1 API call** per day to update them all.
+    - *Result*: A Pro user can have 10 different kits displaying the same YouTube stats, but we only burn **1 API call** to update them all.
 
 ### URL Routing Strategy
-
 - **Primary Kit**: `kyt.one/[username]` (Default)
 - **Secondary Kits (Pro)**: `kyt.one/[username]/[slug]` (e.g., `/josh/q4-rates`)
 
+### Monetization (Micro-SaaS)
+
+**Model**: Freemium. "Speed" (Data Freshness) is the primary upgrade hook for the Annual Plan.
+
+| Feature | Free Tier | Pro Monthly ($7/mo) | Pro Annual ($70/yr) |
+| :--- | :--- | :--- | :--- |
+| **Kits Allowed** | **1 (Primary)** | **Unlimited** | **Unlimited** |
+| **Sync Frequency** | Daily (24h) | Hourly (1h) | **Live (15m)** |
+| **Data Depth** | Current Stats | 30-Day Growth | 30-Day Growth |
+| **Branding** | "Powered by Kyt" | **White Label** | **White Label** |
+| **Verification** | Standard | Standard | **Priority / Pulsing Badge** |
+
 ### Infrastructure & Operations
+- **Domain**: `kyt.one`
+- **Payments**: Lemon Squeezy (Merchant of Record).
+- **Data Strategy**: "Stale-While-Revalidate" (Lazy Updates) to preserve API quota.
 
 - **Domain**: `kyt.one`
 - **Email**: Forwarding configured to personal email (Cost saving).
     - `admin@kyt.one`
     - `contact@kyt.one`
     - `hello@kyt.one`
-
-### Monetization (Micro-SaaS)
-
-**Model**: Freemium. The "Tailored Experience" is the upgrade hook.
-
-| Feature | Free Tier | Pro Tier ($7/mo) |
-| :--- | :--- | :--- |
-| **Kits Allowed** | **1 (Primary Only)** | **Unlimited** (Tailored Links) |
-| **Sync Frequency** | Weekly | Daily/Hourly |
-| **Data Depth** | Current Stats Only | **Historical Growth Graphs** |
-| **Branding** | "Powered by [App]" | **White Label** |
-| **Domain** | `kyt.one/user` | **Custom Domain** (`kit.user.com`) |
 
 ---
 
