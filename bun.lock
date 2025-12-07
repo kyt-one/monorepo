@@ -119,15 +119,14 @@
       "name": "@repo/db",
       "version": "0.0.0",
       "dependencies": {
-        "@repo/utils": "workspace:*",
         "@supabase/supabase-js": "catalog:db",
         "drizzle-orm": "catalog:db",
+        "postgres": "catalog:db",
       },
       "devDependencies": {
         "@repo/config": "workspace:*",
         "dotenv": "catalog:db",
         "drizzle-kit": "catalog:db",
-        "postgres": "catalog:db",
         "supabase": "^2.63.1",
         "typescript": "catalog:default",
       },
@@ -172,6 +171,8 @@
       },
       "devDependencies": {
         "@repo/config": "workspace:*",
+        "@supabase/supabase-js": "catalog:db",
+        "postgres": "catalog:db",
         "typescript": "catalog:default",
       },
     },

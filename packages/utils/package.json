@@ -25,6 +25,8 @@
   },
   "devDependencies": {
     "@repo/config": "workspace:*",
+    "@supabase/supabase-js": "catalog:db",
+    "postgres": "catalog:db",
     "typescript": "catalog:default"
   }
 }
