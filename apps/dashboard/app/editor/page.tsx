@@ -6,14 +6,21 @@ import { EditorForm } from "@/components/editor-form";
 import { getCurrentUser } from "@/lib/utils/current-user";
 import { createClient } from "@/lib/utils/supabase/server";
 
-export default async function EditorPage() {
+interface Props {
+  searchParams: Promise<{ kitId: string }>;
+}
+
+export default async function EditorPage({ searchParams }: Props) {
   const supabase = await createClient();
   const user = await getCurrentUser(supabase);
 
   if (!user) redirect("/auth/sign-in");
 
+  const params = await searchParams;
+  const kitId = params.kitId;
+
   const kit = await db.query.MediaKits.findFirst({
-    where: and(eq(MediaKits.userId, user.id), eq(MediaKits.default, true)),
+    where: and(eq(MediaKits.id, kitId), eq(MediaKits.userId, user.id)),
   });
 
   if (!kit) redirect("/");

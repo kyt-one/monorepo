@@ -53,7 +53,7 @@ export async function updateKitThemeAction(
         theme: { primary, radius },
         updatedAt: new Date(),
       })
-      .where(eq(MediaKits.id, kitId) && eq(MediaKits.userId, user.id));
+      .where(and(eq(MediaKits.id, kitId), eq(MediaKits.userId, user.id)));
 
     revalidatePath("/editor");
     return { success: true };
