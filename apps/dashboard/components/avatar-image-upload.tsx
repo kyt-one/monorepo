@@ -49,7 +49,7 @@ export function AvatarImageUpload({ value, onChange, disabled }: ImageUploadProp
   return (
     <div className="flex items-center gap-4">
       <Avatar className="h-20 w-20 border">
-        <AvatarImage src={value} className="object-cover" />
+        <AvatarImage src={value || undefined} className="object-cover" />
         <AvatarFallback className="bg-muted">
           <If condition={isUploading}>
             <Then>
