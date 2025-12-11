@@ -15,4 +15,4 @@ export const SubscriptionProviderList = ["lemon-squeezy"] as const;
 export const SubscriptionTierList = ["free", "pro"] as const;
 export const SubscriptionIntervalList = ["month", "year"] as const;
 
-export const OnboardingStepList = ["username", "stats", "welcome"] as const;
+export const OnboardingStepList = ["username", "avatar", "stats", "welcome"] as const;

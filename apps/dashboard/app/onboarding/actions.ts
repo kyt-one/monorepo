@@ -2,7 +2,12 @@
 
 import { createDefaultKit } from "@repo/utils/server";
 import { redirect } from "next/navigation";
-import { OnboardingUsernameSchema, type OnboardingUsernameValues } from "@/lib/schemas/onboarding";
+import {
+  OnboardingAvatarSchema,
+  type OnboardingAvatarValues,
+  OnboardingUsernameSchema,
+  type OnboardingUsernameValues,
+} from "@/lib/schemas/onboarding";
 import { getCurrentUser } from "@/lib/utils/current-user";
 import { createClient } from "@/lib/utils/supabase/server";
 
@@ -10,6 +15,13 @@ export type UsernameStepActionState = {
   error?: string;
   fieldErrors?: {
     username?: string[];
+  };
+};
+
+export type AvatarStepActionState = {
+  error?: string;
+  fieldErrors?: {
+    avatarUrl?: string[];
   };
 };
 
@@ -62,6 +74,37 @@ export async function completeUsernameStepAction(
     step_name: "username",
   });
 
+  if (rpcError) return { error: "Failed to update progress." };
+
+  redirect("/onboarding/avatar");
+}
+
+export async function completeAvatarStepAction(
+  data: OnboardingAvatarValues
+): Promise<AvatarStepActionState> {
+  const supabase = await createClient();
+  const user = await getCurrentUser(supabase);
+
+  if (!user) redirect("/auth/sign-in");
+
+  const validated = OnboardingAvatarSchema.safeParse(data);
+  if (!validated.success) {
+    return {
+      fieldErrors: validated.error.flatten().fieldErrors,
+    };
+  }
+
+  const { avatarUrl } = validated.data;
+  const { error: updateError } = await supabase
+    .from("profiles")
+    .update({ avatar_url: avatarUrl })
+    .eq("id", user.id);
+
+  if (updateError) return { error: "Failed to save avatar." };
+
+  const { error: rpcError } = await supabase.rpc("complete_onboarding_step", {
+    step_name: "avatar",
+  });
   if (rpcError) return { error: "Failed to update progress." };
 
   redirect("/onboarding/stats");

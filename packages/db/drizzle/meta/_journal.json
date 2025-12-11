@@ -204,6 +204,13 @@
       "when": 1765422391897,
       "tag": "0028_tough_roughhouse",
       "breakpoints": true
+    },
+    {
+      "idx": 29,
+      "version": "7",
+      "when": 1765430338734,
+      "tag": "0029_wandering_whizzer",
+      "breakpoints": true
     }
   ]
 }

@@ -6,6 +6,7 @@ import { getCurrentUser } from "./current-user";
 
 const OnboardingFlow: OnboardingFlowStep[] = [
   { step: "username", path: "/onboarding/username" },
+  { step: "avatar", path: "/onboarding/avatar" },
   { step: "stats", path: "/onboarding/stats" },
   { step: "welcome", path: "/onboarding/welcome" },
 ];

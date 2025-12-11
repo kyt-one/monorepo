@@ -21,6 +21,9 @@ export function ProfileBlock({ profile, data }: Props) {
 
       <div className="flex flex-col items-center gap-2">
         <h1 className="text-2xl font-bold">{data.displayName || profile.username}</h1>
+
+        {data.tagline && <p className="text-sm text-muted-foreground">{data.tagline}</p>}
+
         <div className="flex items-center gap-1 text-xs text-green-800 bg-green-200 px-3 py-1 rounded-full font-medium">
           Verified
           <ShieldCheck size={12} strokeWidth={3} />

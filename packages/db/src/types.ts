@@ -267,7 +267,7 @@ export type Database = {
     };
     Enums: {
       connected_account_provider: "youtube" | "instagram";
-      onboarding_steps: "username" | "stats" | "welcome";
+      onboarding_steps: "username" | "avatar" | "stats" | "welcome";
       subscription_interval: "month" | "year";
       subscription_provider: "lemon-squeezy";
       subscription_tier: "free" | "pro";
@@ -397,7 +397,7 @@ export const Constants = {
   public: {
     Enums: {
       connected_account_provider: ["youtube", "instagram"],
-      onboarding_steps: ["username", "stats", "welcome"],
+      onboarding_steps: ["username", "avatar", "stats", "welcome"],
       subscription_interval: ["month", "year"],
       subscription_provider: ["lemon-squeezy"],
       subscription_tier: ["free", "pro"],

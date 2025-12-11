@@ -9,9 +9,14 @@ export const OnboardingUsernameSchema = z.object({
     .transform((val) => val.toLowerCase()),
 });
 
+export const OnboardingAvatarSchema = z.object({
+  avatarUrl: z.string().min(1, "Please upload an avatar"),
+});
+
 export interface OnboardingFlowStep {
   step: Enums<"onboarding_steps">;
   path: string;
 }
 
 export type OnboardingUsernameValues = z.infer<typeof OnboardingUsernameSchema>;
+export type OnboardingAvatarValues = z.infer<typeof OnboardingAvatarSchema>;
