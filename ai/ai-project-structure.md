@@ -32,6 +32,9 @@ The project uses a standard Turborepo layout with Bun workspaces:
 │   ├── dashboard/           # Next.js 15 (Creator Admin Portal)
 │   │   ├── Features: Supabase Auth (SSR), OAuth Connect, Lemon Squeezy Billing, Theme Editor
 │   │   └── Uses "use client" heavily for the editor interface
+│   ├── profile/             # Next.js 15 (Public Portfolio View)
+│   │   ├── Features: SSR/ISR for performance, View Counter, Public API Data
+│   │   └── Hosted at `kyt.one/[username]`
 │   └── template/           # Next.js App Template - copy to create new apps
 └── packages/
     ├── ui/                  # Shared Design System

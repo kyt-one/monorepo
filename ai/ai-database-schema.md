@@ -23,8 +23,9 @@ Stores application-specific user data. This table extends Supabase's `auth.users
 | `id` | `uuid` | `PK`, `FK -> auth.users.id` | Primary Key, matches Supabase Auth User ID. |
 | `email` | `text` | `NOT NULL` | User's email address. |
 | `username` | `text` | `UNIQUE` | Unique handle for the creator (e.g., "josh"). |
+| `avatar_url` | `text` | `DEFAULT ''`, `NOT NULL` | URL to the user's avatar image. |
 | `tier` | `subscription_tier` | `DEFAULT 'free'`, `NOT NULL` | Subscription tier (`free` or `pro`). |
-| `onboarding_steps` | `onboarding_steps[]` | `DEFAULT []`, `NOT NULL` | Array of completed onboarding steps (e.g., `['username', 'stats', 'welcome']`). |
+| `onboarding_steps` | `onboarding_steps[]` | `DEFAULT []`, `NOT NULL` | Array of completed onboarding steps (e.g., `['username', 'avatar', 'stats', 'welcome']`). |
 | `created_at` | `timestamp` | `DEFAULT now()` | Creation timestamp. |
 | `updated_at` | `timestamp` | `DEFAULT now()` | Last update timestamp. |
 | `deleted_at` | `timestamp` | | Soft delete timestamp. |
@@ -67,7 +68,7 @@ Stores the media kits created by users.
 | `published` | `boolean` | `DEFAULT false`, `NOT NULL` | Whether the kit is publicly visible. |
 | `default` | `boolean` | `DEFAULT false`, `NOT NULL` | Whether this is the default kit for the user. |
 | `theme` | `jsonb` | `DEFAULT DefaultKitTheme`, `NOT NULL` | Visual theme settings (primary color, radius). |
-| `blocks` | `jsonb` | `DEFAULT DefaultKitBlocks`, `NOT NULL` | Array of content blocks for the media kit. |
+| `blocks` | `jsonb` | `DEFAULT KitBlock[]`, `NOT NULL` | Array of content blocks for the media kit. |
 | `created_at` | `timestamp` | `DEFAULT now()` | Creation timestamp. |
 | `updated_at` | `timestamp` | `DEFAULT now()` | Last update timestamp. |
 | `deleted_at` | `timestamp` | | Soft delete timestamp. |
@@ -157,7 +158,7 @@ A view that filters `connected_accounts` to find those needing a stats refresh. 
 
 - **subscription_tier**: `['free', 'pro']`
 - **subscription_interval**: `['month', 'year']`
-- **onboarding_steps**: `['username', 'stats', 'welcome']`
+- **onboarding_steps**: `['username', 'avatar', 'stats', 'welcome']`
 - **connected_account_provider**: `['youtube', 'instagram', 'tiktok']`
 
 ## JSON Types

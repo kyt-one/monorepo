@@ -14,7 +14,7 @@ We are building a **"Live Media Kit Platform"**—a specialized portfolio tool f
 
 ### A. The Creator (Authenticated User)
 
-1. **Onboarding**: Sign up via Google (Supabase Auth) -> **One-Click YouTube Sync**.
+1. **Onboarding**: Sign up via Google (Supabase Auth) -> **Username** -> **Avatar Upload** -> **One-Click YouTube Sync**.
     - *System automatically generates a "Primary Kit" at `kit.bio/username`.*
 2. **Kit Management (The Dashboard)**:
     - **Single View**: Free users manage their one Primary Kit.
