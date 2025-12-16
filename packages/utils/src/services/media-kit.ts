@@ -1,5 +1,6 @@
-import { db, GetDefaultKitBlocks, MediaKits, Profiles } from "@repo/db";
+import { db, MediaKits, Profiles } from "@repo/db";
 import { and, count, eq } from "drizzle-orm";
+import { createDefaultBlock } from "../default-block-types";
 
 export async function createDefaultKit(userId: string) {
   const existingDefaultKit = await db.query.MediaKits.findFirst({
@@ -23,7 +24,13 @@ export async function createDefaultKit(userId: string) {
       slug: profile.username,
       published: true,
       default: true,
-      blocks: GetDefaultKitBlocks(profile.username),
+      blocks: [
+        createDefaultBlock("profile", { displayName: profile.username }),
+        createDefaultBlock("separator", { title: "Stats" }),
+        createDefaultBlock("stats", { provider: "youtube", metric: "all" }),
+        createDefaultBlock("separator", { title: "Contact" }),
+        createDefaultBlock("contact", { buttonText: "Get in touch" }),
+      ],
     })
     .returning();
 
@@ -53,7 +60,13 @@ export async function createNewKit(userId: string, slug: string) {
       slug: slug.toLowerCase(),
       published: true,
       default: false,
-      blocks: GetDefaultKitBlocks(profile.username),
+      blocks: [
+        createDefaultBlock("profile", { displayName: profile.username }),
+        createDefaultBlock("separator", { title: "Stats" }),
+        createDefaultBlock("stats", { provider: "youtube", metric: "all" }),
+        createDefaultBlock("separator", { title: "Contact" }),
+        createDefaultBlock("contact", { buttonText: "Get in touch" }),
+      ],
     })
     .returning();
 

@@ -32,6 +32,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@repo/ui";
+import { createDefaultBlock } from "@repo/utils";
 import { Plus } from "lucide-react";
 import { useState, useTransition } from "react";
 import { When } from "react-if";
@@ -163,6 +164,7 @@ function AddBlockDropdown({ onAdd }: { onAdd: (t: KitBlock["type"]) => void }) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
+        <DropdownMenuItem onClick={() => onAdd("profile")}>Profile</DropdownMenuItem>
         <DropdownMenuItem onClick={() => onAdd("stats")}>Stats Grid</DropdownMenuItem>
         <DropdownMenuItem onClick={() => onAdd("chart")}>Growth Chart</DropdownMenuItem>
         <DropdownMenuItem onClick={() => onAdd("separator")}>Section Title</DropdownMenuItem>
@@ -171,22 +173,4 @@ function AddBlockDropdown({ onAdd }: { onAdd: (t: KitBlock["type"]) => void }) {
       </DropdownMenuContent>
     </DropdownMenu>
   );
-}
-
-function createDefaultBlock(type: KitBlock["type"]): KitBlock {
-  const id = crypto.randomUUID();
-  switch (type) {
-    case "separator":
-      return { id, type, data: { title: "New Section" } };
-    case "stats":
-      return { id, type, data: { provider: "youtube", metric: "all" } };
-    case "chart":
-      return { id, type, data: { provider: "youtube", metric: "views", days: 30 } };
-    case "custom":
-      return { id, type, data: { title: "New Card", description: "Edit me..." } };
-    case "contact":
-      return { id, type, data: { buttonText: "Work With Me" } };
-    case "profile":
-      return { id, type, data: {} };
-  }
 }
