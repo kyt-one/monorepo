@@ -7,6 +7,19 @@ import { timestamps } from "./schema.helpers";
 
 export type MediaKitEventType = (typeof MediaKitEventTypeList)[number];
 
+export type MediaKitStats = {
+  views: number;
+  shares: number;
+  contacts: number;
+};
+
+export type MediaKitDailyStats = {
+  day: string;
+  views: number;
+  shares: number;
+  contacts: number;
+};
+
 export const MediaKitEvents = pgTable(
   "media_kit_events",
   {
