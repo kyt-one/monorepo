@@ -1,0 +1,772 @@
+{
+  "id": "fe4ea667-34c7-4887-900b-cbec2dd95d22",
+  "prevId": "e432f792-6b73-4f9b-8d1b-86071bfa6ca7",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.connected_accounts": {
+      "name": "connected_accounts",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "provider": {
+          "name": "provider",
+          "type": "connected_account_provider",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "account_id": {
+          "name": "account_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "access_token": {
+          "name": "access_token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "refresh_token": {
+          "name": "refresh_token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "expires_at": {
+          "name": "expires_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "scope": {
+          "name": "scope",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "deleted_at": {
+          "name": "deleted_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "connected_accounts_user_id_profiles_id_fk": {
+          "name": "connected_accounts_user_id_profiles_id_fk",
+          "tableFrom": "connected_accounts",
+          "columnsFrom": ["user_id"],
+          "tableTo": "profiles",
+          "columnsTo": ["id"],
+          "onUpdate": "no action",
+          "onDelete": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {
+        "Users can view own connected accounts": {
+          "name": "Users can view own connected accounts",
+          "as": "PERMISSIVE",
+          "for": "SELECT",
+          "to": ["public"],
+          "using": "auth.uid() = \"connected_accounts\".\"user_id\""
+        },
+        "Users can update own connected accounts": {
+          "name": "Users can update own connected accounts",
+          "as": "PERMISSIVE",
+          "for": "UPDATE",
+          "to": ["public"],
+          "using": "auth.uid() = \"connected_accounts\".\"user_id\""
+        },
+        "Users can insert own connected accounts": {
+          "name": "Users can insert own connected accounts",
+          "as": "PERMISSIVE",
+          "for": "INSERT",
+          "to": ["public"],
+          "withCheck": "auth.uid() = \"connected_accounts\".\"user_id\""
+        }
+      },
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.profiles": {
+      "name": "profiles",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "email": {
+          "name": "email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "username": {
+          "name": "username",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "''"
+        },
+        "tier": {
+          "name": "tier",
+          "type": "subscription_tier",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'free'"
+        },
+        "avatar_url": {
+          "name": "avatar_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "''"
+        },
+        "onboarding_steps": {
+          "name": "onboarding_steps",
+          "type": "onboarding_steps[]",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'{}'"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "deleted_at": {
+          "name": "deleted_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "profiles_id_users_id_fk": {
+          "name": "profiles_id_users_id_fk",
+          "tableFrom": "profiles",
+          "columnsFrom": ["id"],
+          "tableTo": "users",
+          "schemaTo": "auth",
+          "columnsTo": ["id"],
+          "onUpdate": "no action",
+          "onDelete": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "profiles_username_unique": {
+          "name": "profiles_username_unique",
+          "columns": ["username"],
+          "nullsNotDistinct": false
+        }
+      },
+      "policies": {
+        "Users can view own profile": {
+          "name": "Users can view own profile",
+          "as": "PERMISSIVE",
+          "for": "SELECT",
+          "to": ["public"],
+          "using": "auth.uid() = \"profiles\".\"id\""
+        },
+        "Users can update own profile": {
+          "name": "Users can update own profile",
+          "as": "PERMISSIVE",
+          "for": "UPDATE",
+          "to": ["public"],
+          "using": "auth.uid() = \"profiles\".\"id\""
+        },
+        "Users can insert own profile": {
+          "name": "Users can insert own profile",
+          "as": "PERMISSIVE",
+          "for": "INSERT",
+          "to": ["public"],
+          "withCheck": "auth.uid() = \"profiles\".\"id\""
+        }
+      },
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.analytics_snapshots": {
+      "name": "analytics_snapshots",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "provider": {
+          "name": "provider",
+          "type": "connected_account_provider",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "platform_id": {
+          "name": "platform_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "stats": {
+          "name": "stats",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "history": {
+          "name": "history",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'[]'::jsonb"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "deleted_at": {
+          "name": "deleted_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "analytics_snapshots_user_id_profiles_id_fk": {
+          "name": "analytics_snapshots_user_id_profiles_id_fk",
+          "tableFrom": "analytics_snapshots",
+          "columnsFrom": ["user_id"],
+          "tableTo": "profiles",
+          "columnsTo": ["id"],
+          "onUpdate": "no action",
+          "onDelete": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {
+        "Users can view own snapshots": {
+          "name": "Users can view own snapshots",
+          "as": "PERMISSIVE",
+          "for": "SELECT",
+          "to": ["public"],
+          "using": "auth.uid() = \"analytics_snapshots\".\"user_id\""
+        }
+      },
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.media_kit_events": {
+      "name": "media_kit_events",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "kit_id": {
+          "name": "kit_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "event_type": {
+          "name": "event_type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "meta": {
+          "name": "meta",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "deleted_at": {
+          "name": "deleted_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "media_kit_events_user_id_profiles_id_fk": {
+          "name": "media_kit_events_user_id_profiles_id_fk",
+          "tableFrom": "media_kit_events",
+          "columnsFrom": ["user_id"],
+          "tableTo": "profiles",
+          "columnsTo": ["id"],
+          "onUpdate": "no action",
+          "onDelete": "cascade"
+        },
+        "media_kit_events_kit_id_media_kits_id_fk": {
+          "name": "media_kit_events_kit_id_media_kits_id_fk",
+          "tableFrom": "media_kit_events",
+          "columnsFrom": ["kit_id"],
+          "tableTo": "media_kits",
+          "columnsTo": ["id"],
+          "onUpdate": "no action",
+          "onDelete": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "media_kit_events_user_id_unique": {
+          "name": "media_kit_events_user_id_unique",
+          "columns": ["user_id"],
+          "nullsNotDistinct": false
+        }
+      },
+      "policies": {
+        "Creators can view their own analytics": {
+          "name": "Creators can view their own analytics",
+          "as": "PERMISSIVE",
+          "for": "SELECT",
+          "to": ["authenticated"],
+          "using": "auth.uid() = \"media_kit_events\".\"user_id\""
+        }
+      },
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.media_kits": {
+      "name": "media_kits",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "slug": {
+          "name": "slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "published": {
+          "name": "published",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "default": {
+          "name": "default",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "theme": {
+          "name": "theme",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'{\"primary\":\"#171717\",\"radius\":0.5}'::jsonb"
+        },
+        "blocks": {
+          "name": "blocks",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "deleted_at": {
+          "name": "deleted_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "media_kits_user_id_profiles_id_fk": {
+          "name": "media_kits_user_id_profiles_id_fk",
+          "tableFrom": "media_kits",
+          "columnsFrom": ["user_id"],
+          "tableTo": "profiles",
+          "columnsTo": ["id"],
+          "onUpdate": "no action",
+          "onDelete": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "user_kit_slug_unique": {
+          "name": "user_kit_slug_unique",
+          "columns": ["user_id", "slug"],
+          "nullsNotDistinct": false
+        }
+      },
+      "policies": {
+        "Public can view published kits": {
+          "name": "Public can view published kits",
+          "as": "PERMISSIVE",
+          "for": "SELECT",
+          "to": ["public"],
+          "using": "\"media_kits\".\"published\" = true"
+        },
+        "Users can view own kits": {
+          "name": "Users can view own kits",
+          "as": "PERMISSIVE",
+          "for": "SELECT",
+          "to": ["public"],
+          "using": "auth.uid() = \"media_kits\".\"user_id\""
+        },
+        "Users can create own kits": {
+          "name": "Users can create own kits",
+          "as": "PERMISSIVE",
+          "for": "INSERT",
+          "to": ["public"],
+          "withCheck": "auth.uid() = \"media_kits\".\"user_id\""
+        },
+        "Users can update own kits": {
+          "name": "Users can update own kits",
+          "as": "PERMISSIVE",
+          "for": "UPDATE",
+          "to": ["public"],
+          "using": "auth.uid() = \"media_kits\".\"user_id\""
+        },
+        "Users can delete own kits": {
+          "name": "Users can delete own kits",
+          "as": "PERMISSIVE",
+          "for": "DELETE",
+          "to": ["public"],
+          "using": "auth.uid() = \"media_kits\".\"user_id\""
+        }
+      },
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.subscriptions": {
+      "name": "subscriptions",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "provider": {
+          "name": "provider",
+          "type": "subscription_provider",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "customer_id": {
+          "name": "customer_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "subscription_id": {
+          "name": "subscription_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "price_id": {
+          "name": "price_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "interval": {
+          "name": "interval",
+          "type": "subscription_interval",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "current_period_end": {
+          "name": "current_period_end",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "deleted_at": {
+          "name": "deleted_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "subscriptions_user_id_profiles_id_fk": {
+          "name": "subscriptions_user_id_profiles_id_fk",
+          "tableFrom": "subscriptions",
+          "columnsFrom": ["user_id"],
+          "tableTo": "profiles",
+          "columnsTo": ["id"],
+          "onUpdate": "no action",
+          "onDelete": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "subscriptions_user_id_unique": {
+          "name": "subscriptions_user_id_unique",
+          "columns": ["user_id"],
+          "nullsNotDistinct": false
+        },
+        "subscriptions_customer_id_unique": {
+          "name": "subscriptions_customer_id_unique",
+          "columns": ["customer_id"],
+          "nullsNotDistinct": false
+        },
+        "subscriptions_subscription_id_unique": {
+          "name": "subscriptions_subscription_id_unique",
+          "columns": ["subscription_id"],
+          "nullsNotDistinct": false
+        }
+      },
+      "policies": {
+        "Users can view own subscription": {
+          "name": "Users can view own subscription",
+          "as": "PERMISSIVE",
+          "for": "SELECT",
+          "to": ["public"],
+          "using": "auth.uid() = \"subscriptions\".\"user_id\""
+        }
+      },
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {
+    "public.connected_account_provider": {
+      "name": "connected_account_provider",
+      "schema": "public",
+      "values": ["youtube", "instagram"]
+    },
+    "public.onboarding_steps": {
+      "name": "onboarding_steps",
+      "schema": "public",
+      "values": ["username", "avatar", "stats", "welcome"]
+    },
+    "public.subscription_interval": {
+      "name": "subscription_interval",
+      "schema": "public",
+      "values": ["month", "year"]
+    },
+    "public.subscription_provider": {
+      "name": "subscription_provider",
+      "schema": "public",
+      "values": ["lemon-squeezy"]
+    },
+    "public.subscription_tier": {
+      "name": "subscription_tier",
+      "schema": "public",
+      "values": ["free", "pro"]
+    }
+  },
+  "schemas": {},
+  "views": {
+    "public.accounts_due_for_update_view": {
+      "name": "accounts_due_for_update_view",
+      "schema": "public",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "provider": {
+          "name": "provider",
+          "type": "connected_account_provider",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "account_id": {
+          "name": "account_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "access_token": {
+          "name": "access_token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "refresh_token": {
+          "name": "refresh_token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "expires_at": {
+          "name": "expires_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "definition": "\n  SELECT \n    \"connected_accounts\".\"id\",\n    \"connected_accounts\".\"user_id\",\n    \"connected_accounts\".\"provider\",\n    \"connected_accounts\".\"account_id\",\n    \"connected_accounts\".\"access_token\",\n    \"connected_accounts\".\"refresh_token\",\n    \"connected_accounts\".\"expires_at\",\n    \"connected_accounts\".\"updated_at\"\n  FROM \"connected_accounts\"\n  JOIN \"profiles\" ON \"connected_accounts\".\"user_id\" = \"profiles\".\"id\"\n  LEFT JOIN \"subscriptions\" ON \"profiles\".\"id\" = \"subscriptions\".\"user_id\"\n  WHERE \n    -- 1. Annual Pro: Update if older than 15 minutes\n    (\n      \"profiles\".\"tier\" = 'pro' \n      AND \"subscriptions\".\"interval\" = 'year'\n      AND (\n        \"connected_accounts\".\"updated_at\" < NOW() - INTERVAL '15 minutes' \n        OR \"connected_accounts\".\"updated_at\" IS NULL\n      )\n    )\n    OR\n    -- 2. Monthly Pro: Update if older than 1 hour\n    (\n      \"profiles\".\"tier\" = 'pro' \n      AND (\"subscriptions\".\"interval\" = 'month' OR \"subscriptions\".\"interval\" IS NULL)\n      AND (\n        \"connected_accounts\".\"updated_at\" < NOW() - INTERVAL '1 hour' \n        OR \"connected_accounts\".\"updated_at\" IS NULL\n      )\n    )\n    OR\n    -- 3. Free Users: Update if older than 24 hours\n    (\n      \"profiles\".\"tier\" = 'free' \n      AND (\n        \"connected_accounts\".\"updated_at\" < NOW() - INTERVAL '24 hours' \n        OR \"connected_accounts\".\"updated_at\" IS NULL\n      )\n    )\n",
+      "materialized": false,
+      "with": {
+        "securityInvoker": true
+      },
+      "isExisting": false
+    }
+  },
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

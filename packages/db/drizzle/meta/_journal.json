@@ -239,6 +239,34 @@
       "when": 1765983578994,
       "tag": "0033_graceful_hydra",
       "breakpoints": true
+    },
+    {
+      "idx": 34,
+      "version": "7",
+      "when": 1765988187075,
+      "tag": "0034_add_get_media_kit_daily_metrics_function",
+      "breakpoints": true
+    },
+    {
+      "idx": 35,
+      "version": "7",
+      "when": 1765988623551,
+      "tag": "0035_fix_get_media_kit_daily_metrics_function",
+      "breakpoints": true
+    },
+    {
+      "idx": 36,
+      "version": "7",
+      "when": 1765991852044,
+      "tag": "0036_add_get_media_kit_metrics_function",
+      "breakpoints": true
+    },
+    {
+      "idx": 37,
+      "version": "7",
+      "when": 1765992553765,
+      "tag": "0037_drop_metrics_functions",
+      "breakpoints": true
     }
   ]
 }
