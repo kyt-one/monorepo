@@ -1,10 +1,8 @@
 "use client";
 
-import { Button, Input, Label } from "@repo/ui";
-import { Check, Copy, ExternalLink } from "lucide-react";
+import { Button, Input, Label, toast } from "@repo/ui";
+import { Copy, ExternalLink } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
-import { When } from "react-if";
 import { useCopyToClipboard } from "usehooks-ts";
 
 interface Props {
@@ -13,12 +11,10 @@ interface Props {
 
 export function CopyMediaKitLink({ url }: Props) {
   const [_, copy] = useCopyToClipboard();
-  const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
     await copy(url);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    toast.success("Link copied to clipboard");
   };
 
   return (
@@ -28,12 +24,7 @@ export function CopyMediaKitLink({ url }: Props) {
         <Input value={url} readOnly className="font-mono text-sm" />
 
         <Button variant="outline" size="icon" onClick={handleCopy}>
-          <When condition={copied}>
-            <Check className="size-4" />
-          </When>
-          <When condition={!copied}>
-            <Copy className="size-4" />
-          </When>
+          <Copy className="size-4" />
         </Button>
 
         <Button variant="secondary" size="icon" asChild>

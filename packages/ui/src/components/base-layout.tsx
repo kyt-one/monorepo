@@ -1,5 +1,6 @@
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import type * as React from "react";
+import { Toaster } from "sonner";
 
 interface BaseLayoutProps extends React.ComponentProps<typeof NextThemesProvider> {
   children: React.ReactNode;
@@ -16,6 +17,7 @@ export function BaseLayout({ children, ...props }: BaseLayoutProps) {
           {...props}
         >
           {children}
+          <Toaster />
         </NextThemesProvider>
       </body>
     </html>

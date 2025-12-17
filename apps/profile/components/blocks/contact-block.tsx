@@ -1,8 +1,8 @@
 "use client";
 
 import type { ContactBlockData } from "@repo/db";
-import { Button } from "@repo/ui";
-import { Check, Copy, Loader2, Mail } from "lucide-react";
+import { Button, toast } from "@repo/ui";
+import { Copy, Loader2, Mail } from "lucide-react";
 import Link from "next/link";
 import { useState, useTransition } from "react";
 import { When } from "react-if";
@@ -19,7 +19,7 @@ export function ContactBlock({ profileId, data, className }: Props) {
   const [email, setEmail] = useState<string>("");
   const [isPending, startTransition] = useTransition();
   const [_, copy] = useCopyToClipboard();
-  const [isCopied, setIsCopied] = useState(false);
+  const [_isCopied, _setIsCopied] = useState(false);
 
   const handleReveal = () => {
     if (email) return;
@@ -32,8 +32,7 @@ export function ContactBlock({ profileId, data, className }: Props) {
 
   const handleCopy = () => {
     copy(email);
-    setIsCopied(true);
-    setTimeout(() => setIsCopied(false), 2000);
+    toast.success("Email copied to clipboard");
   };
 
   if (email) {
@@ -52,12 +51,7 @@ export function ContactBlock({ profileId, data, className }: Props) {
           className="aspect-square h-12 w-12 shrink-0 border-slate-200 bg-white text-slate-700 hover:bg-slate-50 rounded-(--radius)"
           onClick={handleCopy}
         >
-          <When condition={isCopied}>
-            <Check className="size-4" />
-          </When>
-          <When condition={!isCopied}>
-            <Copy className="size-4" />
-          </When>
+          <Copy className="size-4" />
         </Button>
       </div>
     );
