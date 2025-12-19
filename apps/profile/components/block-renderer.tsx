@@ -18,12 +18,13 @@ import { SeparatorBlock } from "./blocks/separator-block";
 import { StatsBlock } from "./blocks/stats-block";
 
 interface BlockRendererProps {
+  kitId: string;
   block: KitBlock;
   profile: Profile;
   analyticsProvider: AnalyticsProvider;
 }
 
-export function BlockRenderer({ block, profile, analyticsProvider }: BlockRendererProps) {
+export function BlockRenderer({ kitId, block, profile, analyticsProvider }: BlockRendererProps) {
   return (
     <Switch>
       <Case condition={block.type === "profile"}>
@@ -48,6 +49,7 @@ export function BlockRenderer({ block, profile, analyticsProvider }: BlockRender
 
       <Case condition={block.type === "contact"}>
         <ContactBlock
+          kitId={kitId}
           profileId={profile.id}
           data={block.data as ContactBlockData}
           className="w-full h-12 text-base font-semibold shadow-sm text-white bg-primary hover:bg-(--primary)/90 rounded-(--radius)"

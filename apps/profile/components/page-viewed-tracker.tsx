@@ -17,6 +17,8 @@ export function PageViewedTracker({ kitId }: { kitId: string }) {
       trackInteractionAction(kitId, "view", {
         referrer: document.referrer,
         screen: `${window.screen.width}x${window.screen.height}`,
+        userAgent: navigator.userAgent,
+        language: navigator.language,
       });
 
       sessionStorage.setItem(sessionKey, "true");

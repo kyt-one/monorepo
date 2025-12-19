@@ -7,22 +7,24 @@ import Link from "next/link";
 import { useState, useTransition } from "react";
 import { When } from "react-if";
 import { useCopyToClipboard } from "usehooks-ts";
-import { getCreatorEmailAction } from "@/app/[...slug]/actions";
+import { getCreatorEmailAction, trackInteractionAction } from "@/app/[...slug]/actions";
 
 interface Props {
+  kitId: string;
   profileId: string;
   data: ContactBlockData;
   className?: string;
 }
 
-export function ContactBlock({ profileId, data, className }: Props) {
+export function ContactBlock({ kitId, profileId, data, className }: Props) {
   const [email, setEmail] = useState<string>("");
   const [isPending, startTransition] = useTransition();
   const [_, copy] = useCopyToClipboard();
-  const [_isCopied, _setIsCopied] = useState(false);
 
   const handleReveal = () => {
     if (email) return;
+
+    trackInteractionAction(kitId, "contact_click", { target: "email_reveal" });
 
     startTransition(async () => {
       const result = await getCreatorEmailAction(profileId);

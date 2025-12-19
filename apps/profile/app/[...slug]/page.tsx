@@ -63,6 +63,7 @@ export default async function MediaKitPage({ params }: PageProps) {
           {kit.blocks.map((block) => (
             <BlockRenderer
               key={block.id}
+              kitId={kit.id}
               block={block}
               profile={profile}
               analyticsProvider={analyticsProvider}
