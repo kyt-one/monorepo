@@ -1,42 +1,18 @@
-import { CheckoutTiersConfig, db, MediaKits, Profiles } from "@repo/db";
+import { CheckoutTiersConfig } from "@repo/db";
 import { Button, Card, CardContent, CardHeader, CardTitle } from "@repo/ui";
 import { getKitUrl } from "@repo/utils";
-import { MediaKitAnalyticsService } from "@repo/utils/server";
-import { desc, eq } from "drizzle-orm";
 import { Eye, MousePointerClick, Share2 } from "lucide-react";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import { When } from "react-if";
 import { CopyMediaKitLink } from "@/components/copy-media-kit-link";
 import { CreateKitButton } from "@/components/create-kit-button";
 import { ManageSubscriptionButton } from "@/components/manage-subscription-button";
 import { UpgradeButton } from "@/components/upgrade-button";
-import { getCurrentUser } from "@/lib/utils/current-user";
-import { createClient } from "@/lib/utils/supabase/server";
+import { getDashboardDataAction } from "./actions";
 
 export default async function DashboardPage() {
-  const supabase = await createClient();
-  const user = await getCurrentUser(supabase);
-
-  if (!user) redirect("/auth/sign-in");
-
-  const profile = await db.query.Profiles.findFirst({
-    where: eq(Profiles.id, user.id),
-  });
-
-  const kits = await db.query.MediaKits.findMany({
-    where: eq(MediaKits.userId, user.id),
-    orderBy: desc(MediaKits.createdAt),
-  });
-
-  if (!profile || kits.length === 0) redirect("/auth/sign-in");
-
-  const kitsWithMetrics = await Promise.all(
-    kits.map(async (kit) => {
-      const stats = await MediaKitAnalyticsService.getMetrics(kit.id);
-      return { ...kit, stats };
-    })
-  );
+  const data = await getDashboardDataAction();
+  const { user, profile, kits } = data;
 
   const isPro = profile.tier === "pro";
 
@@ -78,7 +54,7 @@ export default async function DashboardPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        {kitsWithMetrics.map((kit) => (
+        {kits.map((kit) => (
           <Card key={kit.id} className={kit.default ? "border-primary/20 bg-muted/10" : ""}>
             <CardHeader className="pb-3">
               <CardTitle className="text-lg flex justify-between items-center">

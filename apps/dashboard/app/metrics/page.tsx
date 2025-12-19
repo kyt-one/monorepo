@@ -1,41 +1,18 @@
-import { db, MediaKits, Profiles } from "@repo/db";
 import { Button, Card, CardContent, CardHeader, CardTitle } from "@repo/ui";
 import { getKitUrl } from "@repo/utils";
-import { MediaKitAnalyticsService } from "@repo/utils/server";
-import { eq } from "drizzle-orm";
 import { ArrowLeft, Eye, MousePointerClick, Share2 } from "lucide-react";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import { MetricsChart } from "@/components/metrics-chart";
-import { getCurrentUser } from "@/lib/utils/current-user";
-import { createClient } from "@/lib/utils/supabase/server";
+import { getMetricsDataAction } from "./actions";
 
 interface Props {
   searchParams: Promise<{ kitId: string }>;
 }
 
 export default async function MetricsPage({ searchParams }: Props) {
-  const supabase = await createClient();
-  const user = await getCurrentUser(supabase);
-
-  if (!user) redirect("/auth/sign-in");
-
   const params = await searchParams;
-  const kitId = params.kitId;
-  const kit = await db.query.MediaKits.findFirst({
-    where: eq(MediaKits.id, kitId),
-  });
-
-  const profile = await db.query.Profiles.findFirst({
-    where: eq(Profiles.id, user.id),
-  });
-
-  if (!kit || !profile) return redirect("/");
-
-  const [totals, history] = await Promise.all([
-    MediaKitAnalyticsService.getMetrics(kit.id),
-    MediaKitAnalyticsService.getGrowthChart(kit.id, 30),
-  ]);
+  const data = await getMetricsDataAction(params.kitId);
+  const { kit, profile, totals, history } = data;
 
   return (
     <main className="min-h-screen p-4 md:p-8 max-w-5xl mx-auto space-y-8">
