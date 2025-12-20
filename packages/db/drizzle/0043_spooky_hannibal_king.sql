@@ -1,0 +1,1 @@
+DROP POLICY "Creators can view their own analytics" ON "media_kit_events" CASCADE;

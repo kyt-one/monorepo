@@ -1,0 +1,1 @@
+CREATE POLICY "Public can insert events" ON "media_kit_events" AS PERMISSIVE FOR INSERT TO "anon", "authenticated" WITH CHECK (true);

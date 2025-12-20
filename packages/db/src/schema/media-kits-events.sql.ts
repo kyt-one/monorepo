@@ -35,11 +35,16 @@ export const MediaKitEvents = pgTable(
     meta: jsonb("meta"),
     ...timestamps,
   },
-  (table) => [
-    pgPolicy("Creators can view their own analytics", {
+  () => [
+    pgPolicy("Public can view events", {
       for: "select",
-      to: ["authenticated"],
-      using: sql`auth.uid() = ${table.userId}`,
+      to: ["anon", "authenticated"],
+      using: sql`true`,
+    }),
+    pgPolicy("Public can insert events", {
+      for: "insert",
+      to: ["anon", "authenticated"],
+      withCheck: sql`true`,
     }),
   ]
 );

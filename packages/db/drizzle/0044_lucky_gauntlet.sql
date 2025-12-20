@@ -1,0 +1,1 @@
+CREATE POLICY "Public can view events" ON "media_kit_events" AS PERMISSIVE FOR SELECT TO "anon", "authenticated" USING (true);
