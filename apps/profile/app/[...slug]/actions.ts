@@ -75,6 +75,8 @@ export async function getPublishedKitAction(username: string, slug?: string) {
         const tier = kit.profile.tier;
         const interval = kit.profile.subscription?.interval;
 
+        console.log(`[YouTube Stale Check] User: ${kit.profile.username}, Diff: ${diffMins}m, Tier: ${tier}, Interval: ${interval}`);
+
         let isStale = false;
 
         // Rule: Annual Pro = 15 mins
@@ -84,17 +86,23 @@ export async function getPublishedKitAction(username: string, slug?: string) {
         // Rule: Free = 24 hours (1440 mins)
         else if (tier === "free" && diffMins > 1440) isStale = true;
 
+        console.log(`[YouTube Stale Check] isStale: ${isStale}`);
+
         if (isStale) {
           const account = kit.profile.connectedAccounts.find((a) => a.provider === "youtube");
 
           if (account) {
+            console.log("[YouTube Stale Check] Refreshing stats in background...");
             after(async () => {
               await YouTubeService.fetchAndSaveStats(
                 kit.profile.id,
                 account.accessToken,
                 account.refreshToken
               );
+              console.log("[YouTube Stale Check] Stats refresh completed.");
             });
+          } else {
+            console.log("[YouTube Stale Check] No connected YouTube account found.");
           }
         }
       }
