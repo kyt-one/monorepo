@@ -49,7 +49,7 @@ export default async function DashboardPage() {
           <When condition={isPro}>
             <ManageSubscriptionButton />
           </When>
-          <CreateKitButton isPro={isPro} />
+          <CreateKitButton profile={profile} />
         </div>
       </div>
 

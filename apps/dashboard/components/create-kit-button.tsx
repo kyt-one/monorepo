@@ -1,5 +1,6 @@
 "use client";
 
+import type { Profile } from "@repo/db";
 import {
   Button,
   Input,
@@ -16,12 +17,18 @@ import { useState, useTransition } from "react";
 import { When } from "react-if";
 import { createNewKitAction } from "@/app/editor/actions";
 
-export function CreateKitButton({ isPro }: { isPro: boolean }) {
+interface Props {
+  profile: Profile;
+}
+
+export function CreateKitButton({ profile }: Props) {
   const [open, setOpen] = useState(false);
   const [slug, setSlug] = useState("");
   const [error, setError] = useState("");
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
+
+  const isPro = profile.tier === "pro";
 
   const handleCreate = () => {
     if (!slug) return;
@@ -56,7 +63,7 @@ export function CreateKitButton({ isPro }: { isPro: boolean }) {
           <div className="py-6 space-y-4">
             <div className="flex items-center gap-2">
               <span className="text-sm text-muted-foreground whitespace-nowrap">
-                kyt.one/username/
+                kyt.one/{profile.username}/
               </span>
               <Input
                 placeholder="gaming"

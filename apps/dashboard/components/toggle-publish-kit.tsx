@@ -19,9 +19,9 @@ export function TogglePublishKit({ kitId, initialPublished }: Props) {
 
     startTransition(async () => {
       try {
-        await togglePublishKitAction(kitId, published);
         toast.success(checked ? "Kit published!" : "Kit unpublished.");
-      } catch (_e) {
+        await togglePublishKitAction(kitId, published);
+      } catch {
         setPublished(!checked);
         toast.error("Failed to update status.");
       }
