@@ -1,6 +1,12 @@
 import { type InferSelectModel, sql } from "drizzle-orm";
 import { pgPolicy, pgSchema, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
-import { connectedAccountProvider, onboardingSteps, subscriptionTier } from "./enums.sql";
+import {
+  connectedAccountProvider,
+  connectedAccountStatus,
+  onboardingSteps,
+  subscriptionTier,
+} from "./enums.sql";
+import type { ConnectedAccountStatusList } from "./schema.constants";
 import { timestamps } from "./schema.helpers";
 
 const AuthSchema = pgSchema("auth");
@@ -51,6 +57,7 @@ export const ConnectedAccounts = pgTable(
     refreshToken: text("refresh_token"),
     expiresAt: timestamp("expires_at"),
     scope: text("scope"),
+    status: connectedAccountStatus("status").default("active").notNull(),
     ...timestamps,
   },
   (table) => [
@@ -69,4 +76,7 @@ export const ConnectedAccounts = pgTable(
   ]
 );
 
+export type ConnectedAccountStatus = (typeof ConnectedAccountStatusList)[number];
+
 export type Profile = InferSelectModel<typeof Profiles>;
+export type ConnectedAccount = InferSelectModel<typeof ConnectedAccounts>;

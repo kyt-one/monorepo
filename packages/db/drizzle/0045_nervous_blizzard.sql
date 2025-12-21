@@ -1,0 +1,2 @@
+CREATE TYPE "public"."connected_account_status" AS ENUM('active', 'error', 'expired');--> statement-breakpoint
+ALTER TABLE "connected_accounts" ADD COLUMN "status" "connected_account_status" DEFAULT 'active' NOT NULL;

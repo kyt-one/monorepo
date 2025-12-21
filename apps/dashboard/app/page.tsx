@@ -8,11 +8,12 @@ import { CreateKitButton } from "@/components/create-kit-button";
 import { LiveKitStats } from "@/components/live-kit-stats";
 import { ManageSubscriptionButton } from "@/components/manage-subscription-button";
 import { UpgradeButton } from "@/components/upgrade-button";
+import { YouTubeConnectButton } from "@/components/youtube-connect-button";
 import { getDashboardDataAction } from "./actions";
 
 export default async function DashboardPage() {
   const data = await getDashboardDataAction();
-  const { user, profile, kits } = data;
+  const { user, profile, kits, ytAccount } = data;
 
   const isPro = profile.tier === "pro";
 
@@ -26,6 +27,8 @@ export default async function DashboardPage() {
           </p>
         </div>
         <div className="flex gap-2 items-center">
+          <YouTubeConnectButton connected={!!ytAccount} status={ytAccount?.status} />
+
           <When condition={!isPro}>
             <div className="flex gap-2">
               <UpgradeButton

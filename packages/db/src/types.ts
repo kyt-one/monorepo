@@ -63,6 +63,7 @@ export type Database = {
           provider: Database["public"]["Enums"]["connected_account_provider"];
           refresh_token: string | null;
           scope: string | null;
+          status: Database["public"]["Enums"]["connected_account_status"];
           updated_at: string;
           user_id: string;
         };
@@ -76,6 +77,7 @@ export type Database = {
           provider: Database["public"]["Enums"]["connected_account_provider"];
           refresh_token?: string | null;
           scope?: string | null;
+          status?: Database["public"]["Enums"]["connected_account_status"];
           updated_at?: string;
           user_id: string;
         };
@@ -89,6 +91,7 @@ export type Database = {
           provider?: Database["public"]["Enums"]["connected_account_provider"];
           refresh_token?: string | null;
           scope?: string | null;
+          status?: Database["public"]["Enums"]["connected_account_status"];
           updated_at?: string;
           user_id?: string;
         };
@@ -315,6 +318,7 @@ export type Database = {
     };
     Enums: {
       connected_account_provider: "youtube" | "instagram";
+      connected_account_status: "active" | "error" | "expired";
       media_kit_event_type: "view" | "share" | "contact_click" | "link_click";
       onboarding_steps: "username" | "avatar" | "stats" | "welcome";
       subscription_interval: "month" | "year";
@@ -446,6 +450,7 @@ export const Constants = {
   public: {
     Enums: {
       connected_account_provider: ["youtube", "instagram"],
+      connected_account_status: ["active", "error", "expired"],
       media_kit_event_type: ["view", "share", "contact_click", "link_click"],
       onboarding_steps: ["username", "avatar", "stats", "welcome"],
       subscription_interval: ["month", "year"],

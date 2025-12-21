@@ -1,8 +1,8 @@
 "use server";
 
-import { db, MediaKits, Profiles } from "@repo/db";
+import { ConnectedAccounts, db, MediaKits, Profiles } from "@repo/db";
 import { MediaKitAnalyticsService } from "@repo/utils/server";
-import { desc, eq } from "drizzle-orm";
+import { and, desc, eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/utils/current-user";
 import { createClient } from "@/lib/utils/supabase/server";
@@ -24,6 +24,14 @@ export async function getDashboardDataAction() {
 
   if (!profile || kits.length === 0) redirect("/auth/sign-in");
 
+  const ytAccount = await db.query.ConnectedAccounts.findFirst({
+    where: and(eq(ConnectedAccounts.userId, user.id), eq(ConnectedAccounts.provider, "youtube")),
+    columns: {
+      id: true,
+      status: true,
+    },
+  });
+
   const kitsWithMetrics = await Promise.all(
     kits.map(async (kit) => {
       const stats = await MediaKitAnalyticsService.getMetrics(kit.id);
@@ -31,5 +39,5 @@ export async function getDashboardDataAction() {
     })
   );
 
-  return { user, profile, kits: kitsWithMetrics };
+  return { user, profile, kits: kitsWithMetrics, ytAccount };
 }

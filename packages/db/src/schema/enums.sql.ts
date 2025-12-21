@@ -1,5 +1,6 @@
 import { pgEnum } from "drizzle-orm/pg-core";
 import {
+  ConnectedAccountStatusList,
   MediaKitEventTypeList,
   OnboardingStepList,
   ProviderList,
@@ -17,3 +18,8 @@ export const subscriptionInterval = pgEnum("subscription_interval", Subscription
 export const connectedAccountProvider = pgEnum("connected_account_provider", ProviderList);
 
 export const mediaKitEventType = pgEnum("media_kit_event_type", MediaKitEventTypeList);
+
+export const connectedAccountStatus = pgEnum(
+  "connected_account_status",
+  ConnectedAccountStatusList
+);
