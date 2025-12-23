@@ -18,7 +18,7 @@ export function StatsBlock({ data, analyticsProvider }: Props) {
   const youtubeStats = stats as YouTubeStats;
 
   return (
-    <div className="cursor-pointer group relative overflow-hidden rounded-4xl bg-stone-50 border border-stone-100 p-8 transition-all duration-500 hover:shadow-md">
+    <div className="cursor-pointer group relative overflow-hidden rounded-4xl bg-stone-50 border border-stone-100 p-8 transition-all duration-500 hover:shadow">
       <div className="absolute -right-10 -top-12 h-64 w-72 rounded-full bg-[radial-gradient(circle,rgba(255,0,0,0.14)_0%,transparent_70%)] blur-xl transition-all duration-500 group-hover:right-0" />
 
       <div className="absolute -left-10 -bottom-10 h-64 w-64 rounded-full bg-[radial-gradient(circle,rgba(255,50,50,0.1)_0%,transparent_70%)] blur-xl transition-all duration-500 group-hover:left-0" />
