@@ -18,14 +18,14 @@ export function StatsBlock({ data, analyticsProvider }: Props) {
   const youtubeStats = stats as YouTubeStats;
 
   return (
-    <div className="group relative overflow-hidden rounded-4xl bg-stone-50 border border-stone-100 p-8 transition-all duration-500 hover:bg-white hover:shadow-xl">
-      <div className="absolute -right-10 -top-10 h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(255,0,0,0.2)_0%,transparent_70%)] blur-xl transition-all duration-700 group-hover:scale-125" />
+    <div className="cursor-pointer group relative overflow-hidden rounded-4xl bg-stone-50 border border-stone-100 p-8 transition-all duration-500 hover:shadow-md">
+      <div className="absolute -right-10 -top-12 h-64 w-72 rounded-full bg-[radial-gradient(circle,rgba(255,0,0,0.18)_0%,transparent_70%)] blur-xl transition-all duration-500 group-hover:right-0" />
 
-      <div className="absolute -left-10 -bottom-10 h-64 w-64 rounded-full bg-[radial-gradient(circle,rgba(255,50,50,0.08)_0%,transparent_70%)] blur-xl transition-all duration-700 group-hover:scale-125" />
+      <div className="absolute -left-10 -bottom-10 h-64 w-64 rounded-full bg-[radial-gradient(circle,rgba(255,50,50,0.1)_0%,transparent_70%)] blur-xl transition-all duration-500 group-hover:left-0" />
 
       <div className="absolute top-6 right-6 flex items-center justify-center">
         <div className="flex size-3 items-center justify-center rounded-full bg-[#EAECF0] shadow-[inset_0_1px_3px_rgba(0,0,0,0.2),0_1px_0_rgba(255,255,255,0.8)]">
-          <div className="size-1.5 rounded-full bg-[#17B26A] shadow-[0_0_8px_1.5px_rgba(23,178,106,0.4)] animate-pulse"></div>
+          <div className="size-1.5 rounded-full bg-green-600 shadow-[0_0_8px_1.5px_rgba(0,206,110,0.4)] animate-pulse"></div>
         </div>
       </div>
 
