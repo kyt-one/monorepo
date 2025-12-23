@@ -30,7 +30,7 @@ export function StatsBlock({ data, analyticsProvider }: Props) {
       </div>
 
       <div className="relative z-10 flex h-full flex-col justify-between gap-5">
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-2">
           <div className="relative size-8 transition-transform duration-500 group-hover:-rotate-12">
             <Image src="/images/youtube/logo.webp" alt="YouTube" fill className="object-contain" />
           </div>
