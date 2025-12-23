@@ -29,7 +29,7 @@ export function StatsBlock({ data, analyticsProvider }: Props) {
         </div>
       </div>
 
-      <div className="relative z-10 flex h-full flex-col justify-between gap-7">
+      <div className="relative z-10 flex h-full flex-col justify-between gap-5">
         <div className="flex items-center gap-2.5">
           <div className="relative size-8 transition-transform duration-500 group-hover:-rotate-12">
             <Image src="/images/youtube/logo.webp" alt="YouTube" fill className="object-contain" />
@@ -53,7 +53,7 @@ export function StatsBlock({ data, analyticsProvider }: Props) {
           </span>
         </div>
 
-        <div className="grid grid-cols-2 gap-8 border-t border-stone-300/50 pt-7">
+        <div className="grid grid-cols-2 gap-8 border-t border-stone-300/50 pt-5">
           <div className="flex flex-col gap-1">
             <span className="font-serif text-4xl font-bold">{shortNumber(youtubeStats.views)}</span>
 
