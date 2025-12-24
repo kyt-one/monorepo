@@ -19,7 +19,7 @@ export function ChartBlock({ data, analyticsProvider }: Props) {
   const chartData = history.slice(-days).reverse();
 
   return (
-    <div className="cursor-pointer relative rounded-4xl bg-stone-900 border border-stone-800 p-8 transition-all duration-500 hover:shadow">
+    <div className="cursor-pointer overflow-hidden relative rounded-4xl bg-stone-900 border border-stone-800 p-8 transition-all duration-500 hover:-translate-y-1">
       <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-[radial-gradient(circle,rgba(20,184,166,0.15)_0%,transparent_70%)] blur-3xl transition-all duration-700 group-hover:scale-125" />
 
       <div
@@ -84,6 +84,7 @@ export function ChartBlock({ data, analyticsProvider }: Props) {
                 dataKey={data.metric}
                 stroke="#ff3f3f"
                 strokeWidth={3}
+                strokeLinecap="round"
                 fill="url(#chartGradientDark)"
                 dot={false}
                 activeDot={{
