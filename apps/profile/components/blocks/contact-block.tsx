@@ -2,7 +2,6 @@
 
 import type { ContactBlockData } from "@repo/db";
 import { toast } from "@repo/ui";
-import Image from "next/image";
 import Link from "next/link";
 import { useState, useTransition } from "react";
 import { Else, If, Then } from "react-if";
@@ -39,26 +38,19 @@ export function ContactBlock({ kitId, profileId, data }: Props) {
     <div className="group relative w-full overflow-hidden rounded-4xl bg-[#f0d1b2] p-8 text-left transition-all duration-500 hover:-translate-y-1">
       <button type="button" className="absolute inset-0 cursor-pointer" onClick={onClick} />
 
-      <div className="absolute right-0 bottom-0 top-0 w-88 pointer-events-none">
-        <Image
-          src="/images/contact-illustration.png"
-          alt="Contact illustration"
-          fill
-          className="object-cover mix-blend-luminosity opacity-70"
-          priority
+      <div className="absolute right-0 bottom-0 top-0 w-1/2 pointer-events-none">
+        <div
+          className="pointer-events-none opacity-30 mix-blend-multiply size-full"
+          style={{
+            backgroundImage: `url("/images/patterns/pattern-4.svg")`,
+            backgroundRepeat: "repeat",
+            backgroundSize: "40%",
+          }}
         />
         <div className="absolute inset-0 bg-linear-to-r from-[#f0d1b2] to-transparent" />
       </div>
 
-      <div
-        className="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-multiply"
-        style={{
-          backgroundImage: `url("/images/patterns/pattern-1.svg")`,
-          backgroundRepeat: "repeat",
-          backgroundSize: "5%",
-        }}
-      />
-      <div className="absolute inset-x-0 bottom-0 h-14 bg-linear-to-t from-[#5d5042]/20 to-transparent pointer-events-none" />
+      <div className="absolute inset-x-0 bottom-0 h-14 bg-linear-to-t from-[#5d5042]/10 to-transparent pointer-events-none" />
 
       <div className="relative flex flex-col justify-between h-full min-h-[140px] pointer-events-none">
         <div className="text-[10px] font-bold uppercase tracking-widest text-[#8D7F71]">
