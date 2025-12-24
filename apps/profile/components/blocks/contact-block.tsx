@@ -61,15 +61,23 @@ export function ContactBlock({ kitId, profileId, data }: Props) {
       <div className="relative z-10 flex flex-col justify-between h-full min-h-[140px] pointer-events-none">
         <div className="text-[10px] font-bold uppercase tracking-widest text-[#8D7F71]">
           <If condition={email}>
-            <Then>SAY HELLO</Then>
-            <Else>Contact Info</Else>
+            <Then>
+              <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
+                SAY HELLO
+              </div>
+            </Then>
+            <Else>
+              <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
+                Contact Info
+              </div>
+            </Else>
           </If>
         </div>
 
         <div className="mt-4">
           <If condition={email}>
             <Then>
-              <div className="flex flex-col gap-2.5 animate-in fade-in slide-in-from-bottom-2 duration-300 pointer-events-auto">
+              <div className="flex flex-col gap-3.5 animate-in fade-in slide-in-from-bottom-2 duration-300 pointer-events-auto">
                 <Link
                   href={`mailto:${email}`}
                   className="font-serif font-semibold text-3xl text-[#3E2723] hover:underline"
@@ -98,7 +106,9 @@ export function ContactBlock({ kitId, profileId, data }: Props) {
             <Else>
               <span className="font-serif font-semibold text-5xl text-[#3E2723] transition-colors">
                 <If condition={isPending}>
-                  <Then>Please wait...</Then>
+                  <Then>
+                    <div className="animate-in fade-in duration-400">Please wait...</div>
+                  </Then>
                   <Else>{data.buttonText}</Else>
                 </If>
               </span>
