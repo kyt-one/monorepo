@@ -26,7 +26,11 @@ export const createDefaultBlock = (
       return {
         id,
         type,
-        data: { title: "New Section", ...(overrides as Partial<SeparatorBlockData>) },
+        data: {
+          title: "New Section",
+          content: "Some content",
+          ...(overrides as Partial<SeparatorBlockData>),
+        },
       };
     case "stats":
       return {

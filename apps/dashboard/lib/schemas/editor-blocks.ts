@@ -9,6 +9,7 @@ import { z } from "zod";
 
 export const SeparatorSchema = z.object({
   title: z.string().min(1, "Title is required"),
+  content: z.string().default(""),
 });
 
 export const StatsSchema = z.object({

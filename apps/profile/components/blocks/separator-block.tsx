@@ -1,14 +1,16 @@
 "use client";
 
 import type { SeparatorBlockData } from "@repo/db";
+import { AutoTextSize } from "auto-text-size";
+import { When } from "react-if";
 
 interface Props {
   data: SeparatorBlockData;
 }
 
-import { AutoTextSize } from "auto-text-size";
-
 export function SeparatorBlock({ data }: Props) {
+  const hasContent = !!data.content;
+
   return (
     <div className="relative size-full bg-[#FAFAF8] cursor-pointer rounded-4xl transition-all duration-500 hover:-translate-y-1 overflow-hidden group flex items-center justify-center p-8 border border-stone-200">
       <div className="flex-col-center justify-between w-full h-full">
@@ -26,16 +28,18 @@ export function SeparatorBlock({ data }: Props) {
             </AutoTextSize>
           </div>
 
-          <div className="flex-row-center w-full">
-            <AutoTextSize
-              className="text-stone-800 font-serif leading-tight tracking-tighter"
-              mode="multiline"
-              maxFontSizePx={26}
-              minFontSizePx={16}
-            >
-              sdd a dsa d sa dsa d asdsa asd dsasd as d asa sd
-            </AutoTextSize>
-          </div>
+          <When condition={hasContent}>
+            <div className="flex-row-center w-full">
+              <AutoTextSize
+                className="text-stone-800 font-serif leading-tight tracking-tighter"
+                mode="multiline"
+                maxFontSizePx={22}
+                minFontSizePx={16}
+              >
+                {data.content}
+              </AutoTextSize>
+            </div>
+          </When>
         </div>
 
         <div className="w-full h-px bg-stone-200" />

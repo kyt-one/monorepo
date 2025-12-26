@@ -29,6 +29,7 @@ export type ChartBlockData = {
 
 export interface SeparatorBlockData {
   title: string;
+  content: string;
 }
 
 export interface ContactBlockData {

@@ -60,12 +60,20 @@ export function BlockConfig({ block, onSave, onCancel }: Props) {
     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
       <Switch>
         <Case condition={block.type === "separator"}>
-          <FormInput
-            control={form.control}
-            name="title"
-            label="Section Title"
-            placeholder="e.g. My Stats"
-          />
+          <div className="space-y-4">
+            <FormInput
+              control={form.control}
+              name="title"
+              label="Section Title"
+              placeholder="e.g. My Stats"
+            />
+            <FormInput
+              control={form.control}
+              name="content"
+              label="Content (Optional)"
+              placeholder="e.g. Here are my latest numbers..."
+            />
+          </div>
         </Case>
 
         <Case condition={block.type === "stats"}>
