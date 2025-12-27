@@ -160,7 +160,7 @@ export type Database = {
           default: boolean;
           deleted_at: string | null;
           id: string;
-          profile_data: Json;
+          profile_override: Json;
           published: boolean;
           slug: string;
           theme: Json;
@@ -173,7 +173,7 @@ export type Database = {
           default?: boolean;
           deleted_at?: string | null;
           id?: string;
-          profile_data?: Json;
+          profile_override?: Json;
           published?: boolean;
           slug: string;
           theme?: Json;
@@ -186,7 +186,7 @@ export type Database = {
           default?: boolean;
           deleted_at?: string | null;
           id?: string;
-          profile_data?: Json;
+          profile_override?: Json;
           published?: boolean;
           slug?: string;
           theme?: Json;

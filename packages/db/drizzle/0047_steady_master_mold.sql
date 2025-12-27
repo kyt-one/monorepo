@@ -1,0 +1,1 @@
+ALTER TABLE "media_kits" RENAME COLUMN "profile_data" TO "profile_override";
