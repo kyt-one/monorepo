@@ -51,7 +51,7 @@ export function ChartBlock({ data, analyticsProvider }: Props) {
           </div>
         </div>
 
-        <div className="h-[120px] w-full mt-2">
+        <div className="h-[120px] w-full mt-2 animate-in fade-in duration-1000">
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={chartData}>
               <defs>
@@ -83,8 +83,9 @@ export function ChartBlock({ data, analyticsProvider }: Props) {
                 type="monotone"
                 dataKey={data.metric}
                 stroke="#ff3f3f"
-                strokeWidth={3}
+                strokeWidth={4}
                 strokeLinecap="round"
+                isAnimationActive={false}
                 fill="url(#chartGradientDark)"
                 dot={false}
                 activeDot={{

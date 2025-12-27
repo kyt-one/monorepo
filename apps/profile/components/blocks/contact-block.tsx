@@ -21,7 +21,6 @@ export function ContactBlock({ kitId, profileId, data }: Props) {
 
   const onClick = () => {
     if (email) return;
-
     trackInteractionAction(kitId, "contact_click", { target: "email_reveal" });
     startTransition(async () => {
       const result = await getCreatorEmailAction(profileId);
@@ -35,80 +34,55 @@ export function ContactBlock({ kitId, profileId, data }: Props) {
   };
 
   return (
-    <div className="group relative h-full w-full overflow-hidden rounded-4xl bg-[#f0d1b2] p-8 text-left transition-all duration-500 hover:-translate-y-1">
-      <button type="button" className="absolute inset-0 cursor-pointer" onClick={onClick} />
+    <div className="group cursor-pointer relative h-full w-full overflow-hidden rounded-4xl bg-linear-to-br from-[#4A3728] to-[#2E1F14] flex items-center justify-center text-center transition-all duration-500 hover:-translate-y-1">
+      <button type="button" className="absolute inset-0 z-10" onClick={onClick} />
+      <div className="absolute top-0 right-0 w-32 h-32 bg-[radial-gradient(circle,rgba(212,165,116,0.2)_0%,transparent_70%)] blur-2xl" />
+      <div className="absolute bottom-0 left-0 w-24 h-24 bg-[radial-gradient(circle,rgba(212,165,116,0.15)_0%,transparent_70%)] blur-2xl" />
 
-      <div className="absolute right-0 bottom-0 top-0 w-1/2 pointer-events-none">
-        <div
-          className="pointer-events-none opacity-30 mix-blend-multiply size-full"
-          style={{
-            backgroundImage: `url("/images/patterns/pattern-4.svg")`,
-            backgroundRepeat: "repeat",
-            backgroundSize: "40%",
-          }}
-        />
-        <div className="absolute inset-0 bg-linear-to-r from-[#f0d1b2] to-transparent" />
-      </div>
-
-      <div className="absolute inset-x-0 bottom-0 h-14 bg-linear-to-t from-[#5d5042]/10 to-transparent pointer-events-none" />
-
-      <div className="relative flex flex-col justify-between h-full min-h-[140px] pointer-events-none">
-        <div className="text-[10px] font-bold uppercase tracking-widest text-[#8D7F71]">
-          <If condition={email}>
-            <Then>
-              <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
-                SAY HELLO
-              </div>
-            </Then>
-            <Else>
-              <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
-                Contact Info
-              </div>
-            </Else>
-          </If>
-        </div>
-
-        <div className="mt-4">
-          <If condition={email}>
-            <Then>
-              <div className="flex flex-col gap-3.5 animate-in fade-in slide-in-from-bottom-2 duration-300 pointer-events-auto">
+      <div className="relative z-10 px-8">
+        <If condition={email}>
+          <Then>
+            <div className="animate-in fade-in zoom-in-95 duration-500 pointer-events-auto">
+              <span className="block text-[10px] font-bold uppercase tracking-[0.3em] text-[#C4956A]/70 mb-4">
+                Get in Touch
+              </span>
+              <Link
+                href={`mailto:${email}`}
+                className="font-serif italic text-5xl text-[#F5EBE0] hover:text-white transition-colors block mb-6"
+              >
+                {email}
+              </Link>
+              <div className="flex justify-center gap-6">
+                <button
+                  onClick={handleCopy}
+                  type="button"
+                  className="text-xs uppercase tracking-widest text-[#C4956A]/60 hover:text-[#F5EBE0] border-b border-transparent hover:border-[#F5EBE0] pb-1 transition-all"
+                >
+                  Copy
+                </button>
                 <Link
                   href={`mailto:${email}`}
-                  className="font-serif font-semibold text-3xl text-[#3E2723] hover:underline"
+                  className="text-xs uppercase tracking-widest text-[#C4956A]/60 hover:text-[#F5EBE0] border-b border-transparent hover:border-[#F5EBE0] pb-1 transition-all"
                 >
-                  {email}
+                  Email
                 </Link>
-
-                <div className="flex gap-4">
-                  <button
-                    onClick={handleCopy}
-                    type="button"
-                    className="text-xs font-bold uppercase tracking-widest text-[#8D7F71] hover:text-[#3E2723] hover:underline transition-colors"
-                  >
-                    [ Copy Email ]
-                  </button>
-                  <Link
-                    href={`mailto:${email}`}
-                    className="text-xs font-bold uppercase tracking-widest text-[#8D7F71] hover:text-[#3E2723] hover:underline transition-colors"
-                  >
-                    [ Send Message ]
-                  </Link>
-                </div>
               </div>
-            </Then>
-
-            <Else>
-              <span className="font-serif font-semibold text-5xl text-[#3E2723] transition-colors">
+            </div>
+          </Then>
+          <Else>
+            <div className="space-y-2">
+              <span className="block text-[10px] font-bold uppercase tracking-[0.3em] text-[#C4956A]/70">
+                Contact
+              </span>
+              <span className="font-serif italic text-5xl text-[#F5EBE0] group-hover:text-white group-hover:scale-105 transition-all inline-block">
                 <If condition={isPending}>
-                  <Then>
-                    <div className="animate-in fade-in duration-400">Please wait...</div>
-                  </Then>
+                  <Then>Loading ...</Then>
                   <Else>{data.buttonText}</Else>
                 </If>
               </span>
-            </Else>
-          </If>
-        </div>
+            </div>
+          </Else>
+        </If>
       </div>
     </div>
   );
