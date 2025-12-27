@@ -68,11 +68,6 @@ export const BlockSchema = z.discriminatedUnion("type", [
     type: z.literal("contact"),
     data: ContactSchema,
   }),
-  z.object({
-    id: z.string(),
-    type: z.literal("profile"),
-    data: ProfileSchema,
-  }),
 ]);
 
 export const BlockDataSchema = z.union([
@@ -81,5 +76,4 @@ export const BlockDataSchema = z.union([
   ChartSchema,
   CustomSchema,
   ContactSchema,
-  ProfileSchema,
 ]);

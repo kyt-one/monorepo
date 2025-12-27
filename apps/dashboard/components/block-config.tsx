@@ -11,11 +11,9 @@ import {
   ChartSchema,
   ContactSchema,
   CustomSchema,
-  ProfileSchema,
   SeparatorSchema,
   StatsSchema,
 } from "@/lib/schemas/editor-blocks";
-import { AvatarImageUpload } from "./avatar-image-upload";
 
 interface Props {
   block: KitBlock;
@@ -30,7 +28,6 @@ export function BlockConfig({ block, onSave, onCancel }: Props) {
     chart: ChartSchema,
     custom: CustomSchema,
     contact: ContactSchema,
-    profile: ProfileSchema,
   }[block.type];
 
   const form = useForm<KitBlock["data"]>({
@@ -41,11 +38,6 @@ export function BlockConfig({ block, onSave, onCancel }: Props) {
   const selectedProvider = useWatch({
     control: form.control,
     name: "provider",
-  });
-
-  const customAvatarUrl = useWatch({
-    control: form.control,
-    name: "customAvatarUrl",
   });
 
   useEffect(() => {
@@ -178,40 +170,6 @@ export function BlockConfig({ block, onSave, onCancel }: Props) {
 
         <Case condition={block.type === "contact"}>
           <FormInput control={form.control} name="buttonText" label="Button Text" />
-        </Case>
-
-        <Case condition={block.type === "profile"}>
-          <div className="space-y-6">
-            <div className="space-y-3">
-              <label
-                htmlFor="customAvatarUrl"
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
-                Profile Picture
-              </label>
-              <AvatarImageUpload
-                value={customAvatarUrl}
-                onChange={(url) => form.setValue("customAvatarUrl", url, { shouldDirty: true })}
-              />
-              <p className="text-xs text-muted-foreground">
-                Leave empty to use your default profile picture.
-              </p>
-            </div>
-
-            <FormInput
-              control={form.control}
-              name="displayName"
-              label="Display Name Override"
-              placeholder="e.g. Josh | Tech Content"
-            />
-
-            <FormInput
-              control={form.control}
-              name="tagline"
-              label="Tagline"
-              placeholder="e.g. Helping devs build faster."
-            />
-          </div>
         </Case>
 
         <Default>

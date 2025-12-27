@@ -164,7 +164,6 @@ function AddBlockDropdown({ onAdd }: { onAdd: (t: KitBlock["type"]) => void }) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => onAdd("profile")}>Profile</DropdownMenuItem>
         <DropdownMenuItem onClick={() => onAdd("stats")}>Stats Grid</DropdownMenuItem>
         <DropdownMenuItem onClick={() => onAdd("chart")}>Growth Chart</DropdownMenuItem>
         <DropdownMenuItem onClick={() => onAdd("separator")}>Section Title</DropdownMenuItem>

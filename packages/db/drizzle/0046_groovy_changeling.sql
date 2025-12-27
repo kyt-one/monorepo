@@ -1,0 +1,1 @@
+ALTER TABLE "media_kits" ADD COLUMN "profile_data" jsonb DEFAULT '{}'::jsonb NOT NULL;

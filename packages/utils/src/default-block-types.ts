@@ -3,7 +3,6 @@ import type {
   ContactBlockData,
   CustomBlockData,
   KitBlock,
-  ProfileBlockData,
   SeparatorBlockData,
   StatsBlockData,
 } from "@repo/db";
@@ -16,12 +15,6 @@ export const createDefaultBlock = (
   const id = randomId();
 
   switch (type) {
-    case "profile":
-      return {
-        id,
-        type,
-        data: { displayName: "", ...(overrides as Partial<ProfileBlockData>) },
-      };
     case "separator":
       return {
         id,

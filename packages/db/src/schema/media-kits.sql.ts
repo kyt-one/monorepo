@@ -51,7 +51,6 @@ export interface MediaKitTheme {
 }
 
 export type KitBlock =
-  | { id: string; type: "profile"; data: ProfileBlockData }
   | { id: string; type: "stats"; data: StatsBlockData }
   | { id: string; type: "chart"; data: ChartBlockData }
   | { id: string; type: "separator"; data: SeparatorBlockData }
@@ -73,6 +72,7 @@ export const MediaKits = pgTable(
     published: boolean("published").default(false).notNull(),
     default: boolean("default").default(false).notNull(),
     theme: jsonb("theme").$type<MediaKitTheme>().notNull().default(DefaultKitTheme),
+    profileData: jsonb("profile_data").$type<ProfileBlockData>().notNull().default({}),
     blocks: jsonb("blocks").$type<KitBlock[]>().notNull(),
     ...timestamps,
   },
