@@ -10,7 +10,7 @@ import type {
 import type { connectedAccountProvider } from "./enums.sql";
 import { DefaultKitTheme, timestamps } from "./schema.helpers";
 
-export interface ProfileBlockData {
+export interface ProfileOverrideData {
   displayName?: string;
   tagline?: string;
   customAvatarUrl?: string;
@@ -72,7 +72,7 @@ export const MediaKits = pgTable(
     published: boolean("published").default(false).notNull(),
     default: boolean("default").default(false).notNull(),
     theme: jsonb("theme").$type<MediaKitTheme>().notNull().default(DefaultKitTheme),
-    profileData: jsonb("profile_data").$type<ProfileBlockData>().notNull().default({}),
+    profileOverride: jsonb("profile_override").$type<ProfileOverrideData>().notNull().default({}),
     blocks: jsonb("blocks").$type<KitBlock[]>().notNull(),
     ...timestamps,
   },

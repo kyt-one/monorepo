@@ -1,5 +1,5 @@
-import type { Profile, ProfileBlockData } from "@repo/db";
+import type { Profile, ProfileOverrideData } from "@repo/db";
 
-export const getDisplayUsername = (profile: Profile, profileBlock: ProfileBlockData) => {
-  return profileBlock.displayName || profile.username;
+export const getDisplayUsername = (profile: Profile, profileOverride: ProfileOverrideData) => {
+  return profileOverride.displayName || profile.username;
 };

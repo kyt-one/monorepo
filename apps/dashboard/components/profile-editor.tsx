@@ -1,6 +1,6 @@
 "use client";
 
-import type { Profile, ProfileBlockData } from "@repo/db";
+import type { Profile, ProfileOverrideData } from "@repo/db";
 import { Button, Card, CardContent, CardHeader, CardTitle, Input, Label } from "@repo/ui";
 import { Loader2 } from "lucide-react";
 import { useActionState, useState } from "react";
@@ -9,7 +9,7 @@ import { AvatarImageUpload } from "./avatar-image-upload";
 
 interface ProfileEditorProps {
   kitId: string;
-  initialProfileData: ProfileBlockData;
+  initialProfileData: ProfileOverrideData;
   profile: Profile;
 }
 

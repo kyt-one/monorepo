@@ -1,6 +1,6 @@
 "use server";
 
-import { db, type KitBlock, MediaKits, type ProfileBlockData, Profiles } from "@repo/db";
+import { db, type KitBlock, MediaKits, type ProfileOverrideData, Profiles } from "@repo/db";
 import { HexColorSchema } from "@repo/utils";
 import { MediaKitService } from "@repo/utils/server";
 import { and, eq } from "drizzle-orm";
@@ -144,7 +144,7 @@ export async function updateKitProfileAction(
     await db
       .update(MediaKits)
       .set({
-        profileData: profileData as ProfileBlockData,
+        profileOverride: profileData as ProfileOverrideData,
         updatedAt: Now(),
       })
       .where(and(eq(MediaKits.id, kitId), eq(MediaKits.userId, user.id)));

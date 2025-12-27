@@ -44,7 +44,11 @@ export default async function EditorPage({ searchParams }: Props) {
 
       <div className="grid gap-8 lg:grid-cols-5">
         <div className="lg:col-span-2 space-y-6">
-          <ProfileEditor kitId={kit.id} initialProfileData={kit.profileData} profile={profile} />
+          <ProfileEditor
+            kitId={kit.id}
+            initialProfileData={kit.profileOverride}
+            profile={profile}
+          />
           <BlocksEditor kitId={kit.id} initialBlocks={kit.blocks} />
         </div>
 
