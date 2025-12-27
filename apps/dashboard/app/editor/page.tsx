@@ -1,11 +1,11 @@
-import { db, MediaKits } from "@repo/db";
-import { and, eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import { BlocksEditor } from "@/components/blocks-editor";
 import { EditorForm } from "@/components/editor-form";
+import { ProfileEditor } from "@/components/profile-editor";
 import { TogglePublishKit } from "@/components/toggle-publish-kit";
 import { getCurrentUser } from "@/lib/utils/current-user";
 import { createClient } from "@/lib/utils/supabase/server";
+import { getEditorDataAction } from "./actions";
 
 interface Props {
   searchParams: Promise<{ kitId: string }>;
@@ -20,11 +20,11 @@ export default async function EditorPage({ searchParams }: Props) {
   const params = await searchParams;
   const kitId = params.kitId;
 
-  const kit = await db.query.MediaKits.findFirst({
-    where: and(eq(MediaKits.id, kitId), eq(MediaKits.userId, user.id)),
-  });
+  const data = await getEditorDataAction(kitId);
 
-  if (!kit) redirect("/");
+  if (!data) redirect("/");
+
+  const { kit, profile } = data;
 
   return (
     <main className="min-h-screen p-4 md:p-8 max-w-6xl mx-auto space-y-8">
@@ -44,6 +44,7 @@ export default async function EditorPage({ searchParams }: Props) {
 
       <div className="grid gap-8 lg:grid-cols-5">
         <div className="lg:col-span-2 space-y-6">
+          <ProfileEditor kitId={kit.id} initialProfileData={kit.profileData} profile={profile} />
           <BlocksEditor kitId={kit.id} initialBlocks={kit.blocks} />
         </div>
 

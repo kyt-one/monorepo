@@ -1,6 +1,6 @@
 "use server";
 
-import { db, type KitBlock, MediaKits, type ProfileBlockData } from "@repo/db";
+import { db, type KitBlock, MediaKits, Profiles, type ProfileBlockData } from "@repo/db";
 import { HexColorSchema } from "@repo/utils";
 import { MediaKitService } from "@repo/utils/server";
 import { and, eq } from "drizzle-orm";
@@ -114,7 +114,7 @@ export async function createNewKitAction(slug: string) {
   }
 }
 
-export async function updateKitProfileDataAction(
+export async function updateKitProfileAction(
   _prevState: UpdateState,
   formData: FormData
 ): Promise<UpdateState> {
@@ -172,4 +172,24 @@ export async function togglePublishKitAction(kitId: string, currentState: boolea
   revalidatePath("/dashboard");
 
   return newState;
+}
+
+export async function getEditorDataAction(kitId: string) {
+  const supabase = await createClient();
+  const user = await getCurrentUser(supabase);
+
+  if (!user) return null;
+
+  const [kit, profile] = await Promise.all([
+    db.query.MediaKits.findFirst({
+      where: and(eq(MediaKits.id, kitId), eq(MediaKits.userId, user.id)),
+    }),
+    db.query.Profiles.findFirst({
+      where: eq(Profiles.id, user.id),
+    }),
+  ]);
+
+  if (!kit || !profile) return null;
+
+  return { kit, profile };
 }
