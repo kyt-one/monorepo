@@ -1,6 +1,6 @@
 "use server";
 
-import { db, type KitBlock, MediaKits, Profiles, type ProfileBlockData } from "@repo/db";
+import { db, type KitBlock, MediaKits, type ProfileBlockData, Profiles } from "@repo/db";
 import { HexColorSchema } from "@repo/utils";
 import { MediaKitService } from "@repo/utils/server";
 import { and, eq } from "drizzle-orm";
