@@ -35,7 +35,7 @@ export function ContactBlock({ kitId, profileId, data }: Props) {
   };
 
   return (
-    <div className="group relative w-full overflow-hidden rounded-4xl bg-[#f0d1b2] p-8 text-left transition-all duration-500 hover:-translate-y-1">
+    <div className="group relative h-full w-full overflow-hidden rounded-4xl bg-[#f0d1b2] p-8 text-left transition-all duration-500 hover:-translate-y-1">
       <button type="button" className="absolute inset-0 cursor-pointer" onClick={onClick} />
 
       <div className="absolute right-0 bottom-0 top-0 w-1/2 pointer-events-none">

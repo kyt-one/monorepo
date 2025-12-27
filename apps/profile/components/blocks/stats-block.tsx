@@ -18,7 +18,7 @@ export function StatsBlock({ data, analyticsProvider }: Props) {
   const youtubeStats = stats as YouTubeStats;
 
   return (
-    <div className="cursor-pointer group relative overflow-hidden rounded-4xl bg-gray-50 border border-gray-200 p-8 transition-all duration-500 hover:-translate-y-1">
+    <div className="cursor-pointer h-full group relative overflow-hidden rounded-4xl bg-gray-50 border border-gray-200 p-8 transition-all duration-500 hover:-translate-y-1">
       <div className="absolute -right-10 -top-12 h-64 w-72 rounded-full bg-[radial-gradient(circle,rgba(255,0,0,0.14)_0%,transparent_70%)] blur-xl transition-all duration-500 group-hover:right-0" />
 
       <div className="absolute -left-10 -bottom-10 h-64 w-64 rounded-full bg-[radial-gradient(circle,rgba(255,50,50,0.1)_0%,transparent_70%)] blur-xl transition-all duration-500 group-hover:left-0" />
@@ -31,7 +31,7 @@ export function StatsBlock({ data, analyticsProvider }: Props) {
 
       <div className="relative z-10 flex h-full flex-col justify-between gap-4">
         <div className="flex items-center gap-2">
-          <div className="relative size-8 transition-transform duration-500 group-hover:-rotate-12">
+          <div className="relative size-6 transition-transform duration-500 group-hover:-rotate-12">
             <Image
               src="/images/youtube/logo.webp"
               alt="YouTube"
@@ -42,12 +42,12 @@ export function StatsBlock({ data, analyticsProvider }: Props) {
           </div>
 
           <div className="flex-row-center gap-1.5">
-            <span className="font-serif text-2xl font-bold tracking-tight">
+            <span className="font-serif text-xl font-bold tracking-tight">
               {ProviderLabels[data.provider]}
             </span>
 
             <div className="flex mt-0.5 p-1 items-center justify-center rounded-full bg-[#ff3f3f] text-white">
-              <Check size={10} strokeWidth={4} />
+              <Check size={8} strokeWidth={4} />
             </div>
           </div>
         </div>
