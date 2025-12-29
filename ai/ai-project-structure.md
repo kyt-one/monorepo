@@ -132,7 +132,44 @@ bun run db:studio     # Open Drizzle Studio to view/edit data
 
 ---
 
-## 7. Theming Strategy
+## 7. Supabase Storage
+
+The project uses Supabase Storage for file uploads. Required buckets:
+
+### Required Buckets
+
+| Bucket Name | Purpose | Public | Size Limit |
+|-------------|---------|--------|------------|
+| `avatars` | User profile pictures | Yes | 2MB |
+| `kit-block-backgrounds` | Custom block background images | Yes | 5MB |
+
+### Setup Instructions
+
+1. Go to Supabase Dashboard → Storage
+2. Create each bucket with "Public bucket" enabled
+3. Configure RLS policies for security (optional but recommended)
+
+### Usage in Code
+
+```typescript
+// Upload to avatars bucket
+await supabase.storage.from("avatars").upload(filePath, file);
+
+// Upload to kit-block-backgrounds bucket
+await supabase.storage.from("kit-block-backgrounds").upload(filePath, file);
+
+// Get public URL
+const { data } = supabase.storage.from("avatars").getPublicUrl(filePath);
+```
+
+### Components
+
+- `apps/dashboard/components/avatar-image-upload.tsx` - Avatar uploads
+- `apps/dashboard/components/background-image-upload.tsx` - Background image uploads
+
+---
+
+## 8. Theming Strategy
 
 - **Base Theme**: `packages/ui/src/base.css` - shared CSS variables and design tokens
 - **App Themes**: Each app's `app/tailwind.css` imports base and can override variables
@@ -140,7 +177,7 @@ bun run db:studio     # Open Drizzle Studio to view/edit data
 
 ---
 
-## 8. Code Style Guidelines
+## 9. Code Style Guidelines
 
 **General**: Concise, functional, predictable. Server-first (RSC by default, `"use client"` only at leaves).
 
@@ -161,7 +198,7 @@ bun run db:studio     # Open Drizzle Studio to view/edit data
 
 ---
 
-## 9. Creating New Apps
+## 10. Creating New Apps
 
 ```bash
 cp -r apps/template apps/[your-app-name]

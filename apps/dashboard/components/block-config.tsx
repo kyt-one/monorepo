@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { KitBlock } from "@repo/db";
-import { Button, FormInput, FormSelect } from "@repo/ui";
+import { Button, FormInput, FormSelect, Label } from "@repo/ui";
 import { getProviderMetricOptions, ProviderOptions } from "@repo/utils";
 import { useEffect } from "react";
 import { useForm, useWatch } from "react-hook-form";
@@ -14,6 +14,7 @@ import {
   SeparatorSchema,
   StatsSchema,
 } from "@/lib/schemas/editor-blocks";
+import { BackgroundImageUpload } from "./background-image-upload";
 
 interface Props {
   block: KitBlock;
@@ -38,6 +39,11 @@ export function BlockConfig({ block, onSave, onCancel }: Props) {
   const selectedProvider = useWatch({
     control: form.control,
     name: "provider",
+  });
+
+  const backgroundImage = useWatch({
+    control: form.control,
+    name: "backgroundImage",
   });
 
   useEffect(() => {
@@ -158,6 +164,13 @@ export function BlockConfig({ block, onSave, onCancel }: Props) {
                   className="h-10 w-full p-1 cursor-pointer"
                 />
               </div>
+            </div>
+            <div className="space-y-2">
+              <Label>Background Image (Optional)</Label>
+              <BackgroundImageUpload
+                value={backgroundImage}
+                onChange={(url) => form.setValue("backgroundImage", url)}
+              />
             </div>
             <FormInput
               control={form.control}

@@ -10,9 +10,8 @@ interface Props {
 
 export function StatsBlock({ data, analyticsProvider }: Props) {
   const snapshot = analyticsProvider[data.provider];
-  if (!snapshot) return null;
-
   const stats = snapshot.stats;
+
   if (data.provider !== "youtube") return null;
 
   const youtubeStats = stats as YouTubeStats;

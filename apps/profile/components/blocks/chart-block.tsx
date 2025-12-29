@@ -11,11 +11,8 @@ interface Props {
 }
 
 export function ChartBlock({ data, analyticsProvider }: Props) {
-  const history = analyticsProvider[data.provider]?.history || [];
+  const history = analyticsProvider[data.provider].history;
   const days = data.days;
-
-  if (history.length === 0) return null;
-
   const chartData = history.slice(-days).reverse();
 
   return (

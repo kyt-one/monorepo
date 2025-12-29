@@ -8,7 +8,7 @@ import type {
 } from "@repo/db";
 import { randomId } from "./random-id";
 
-export const createDefaultBlock = (
+export const getDefaultBlock = (
   type: KitBlock["type"],
   overrides: Partial<KitBlock["data"]> = {}
 ): KitBlock => {

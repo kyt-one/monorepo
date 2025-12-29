@@ -1,6 +1,6 @@
 import { db, MediaKits, Profiles } from "@repo/db";
 import { and, count, eq } from "drizzle-orm";
-import { createDefaultBlock } from "../default-block-types";
+import { getDefaultBlock } from "../default-block-types";
 import { takeUnique } from "../take-unique";
 
 export const MediaKitService = {
@@ -28,10 +28,10 @@ export const MediaKitService = {
           published: true,
           default: true,
           blocks: [
-            createDefaultBlock("separator", { title: "Stats" }),
-            createDefaultBlock("stats", { provider: "youtube", metric: "all" }),
-            createDefaultBlock("separator", { title: "Contact" }),
-            createDefaultBlock("contact", { buttonText: "Get in touch" }),
+            getDefaultBlock("separator", { title: "Stats" }),
+            getDefaultBlock("stats", { provider: "youtube", metric: "all" }),
+            getDefaultBlock("separator", { title: "Contact" }),
+            getDefaultBlock("contact", { buttonText: "Get in touch" }),
           ],
         })
         .returning()
@@ -62,10 +62,10 @@ export const MediaKitService = {
           published: true,
           default: false,
           blocks: [
-            createDefaultBlock("separator", { title: "Stats" }),
-            createDefaultBlock("stats", { provider: "youtube", metric: "all" }),
-            createDefaultBlock("separator", { title: "Contact" }),
-            createDefaultBlock("contact", { buttonText: "Get in touch" }),
+            getDefaultBlock("separator", { title: "Stats" }),
+            getDefaultBlock("stats", { provider: "youtube", metric: "all" }),
+            getDefaultBlock("separator", { title: "Contact" }),
+            getDefaultBlock("contact", { buttonText: "Get in touch" }),
           ],
         })
         .returning()

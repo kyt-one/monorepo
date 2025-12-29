@@ -32,7 +32,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@repo/ui";
-import { createDefaultBlock } from "@repo/utils";
+import { getDefaultBlock } from "@repo/utils";
 import { Plus } from "lucide-react";
 import { useState, useTransition } from "react";
 import { When } from "react-if";
@@ -78,7 +78,7 @@ export function BlocksEditor({ kitId, initialBlocks }: Props) {
   };
 
   const handleAdd = (type: KitBlock["type"]) => {
-    const newBlock: KitBlock = createDefaultBlock(type);
+    const newBlock: KitBlock = getDefaultBlock(type);
     const newBlocks = [...blocks, newBlock];
     setBlocks(newBlocks);
     saveBlocks(newBlocks);
