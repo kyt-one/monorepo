@@ -74,7 +74,7 @@ export function ContactBlock({ kitId, profileId, data }: Props) {
               <span className="block text-[10px] font-bold uppercase tracking-[0.3em] text-[#C4956A]/70">
                 Contact
               </span>
-              <span className="font-serif italic text-5xl text-[#F5EBE0] group-hover:text-white group-hover:scale-105 transition-all inline-block">
+              <span className="font-serif italic text-5xl text-[#F5EBE0] group-hover:text-white transition-all inline-block">
                 <If condition={isPending}>
                   <Then>Loading ...</Then>
                   <Else>{data.buttonText}</Else>

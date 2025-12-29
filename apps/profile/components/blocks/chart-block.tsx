@@ -48,7 +48,7 @@ export function ChartBlock({ data, analyticsProvider }: Props) {
           </div>
         </div>
 
-        <div className="h-[120px] w-full mt-2 animate-in fade-in duration-1000">
+        <div className="h-[120px] w-full mt-2 animate-in fade-in duration-1200">
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={chartData}>
               <defs>
